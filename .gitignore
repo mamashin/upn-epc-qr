@@ -1,0 +1,6 @@
+.idea
+.env
+db.sqlite3
+poetry.lock
+logs/*.log
+staticfiles

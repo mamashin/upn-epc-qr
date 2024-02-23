@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark"/>
+    <title>QR EPC Generator</title>
+    <meta name="description" content="convert UPN QR to EPC">
+    <meta name="keywords" content="qr upn epc">
+    <meta property="og:title" content="Convert UPN QR to EPC">
+    <meta property="og:description" content="convert UPN QR to EPC">
+    <meta property="og:url" content="https://mamashin.ru">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://mamashin.ru/img/og.png">
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    <script src="{% static 'js/html5-qrcode.min.js' %}"></script>
+    <script src="{% static 'js/htmx.min.js' %}"></script>
+    <style>
+        #reader {
+            width: 640px;
+        }
+        @media (max-width: 640px) {
+            #reader {
+                width: 100%;
+            }
+        }
+    </style>
+    
+    <script>
+        let html5QrcodeScanner = null;
+        htmx.onLoad(function () {
+            console.log('onLoad');
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 10,
+                    qrbox: 250,
+                    facingMode: {exact: "environment"},
+                    formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+                    aspectRatio: 1,
+                    experimentalFeatures: {useBarCodeDetectorIfSupported: false}
+                });
+            html5QrcodeScanner.render(onScanSuccess);
+        });
+        
+        function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+            html5QrcodeScanner.clear();
+            html5QrcodeScanner.stop();
+        }
+    </script>
+</head>
+<body>
+<main class="container">
+    <h1>Heading</h1>
+    <p>This is paragraph text</p>
+    <div id="reader"></div>
+</main>
+</body>
+</html>
