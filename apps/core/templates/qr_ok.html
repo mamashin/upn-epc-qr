@@ -1,0 +1,15 @@
+{% extends "nav.html" %}
+
+{% block menu %}
+    <p>QR код для оплаты через Revolut / Wise / ...</p>
+    <hr />
+    <div class="grid">
+    <div class="qr-code">
+        <img alt="EPC QR code" src="data:image/png;base64,{{img}}" />
+    <hr />
+    {% include 'qr_link.html' %}
+    </div>
+    <div id="manual_edit"></div>
+    </div>
+    
+{% endblock %}

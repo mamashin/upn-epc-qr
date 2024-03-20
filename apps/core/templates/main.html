@@ -6,56 +6,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark"/>
     <title>QR EPC Generator</title>
-    <meta name="description" content="convert UPN QR to EPC">
-    <meta name="keywords" content="qr upn epc">
+    <meta name="description" content="Convert UPN QR to EPC QR code">
+    <meta name="keywords" content="qr upn epc slovenia eu">
     <meta property="og:title" content="Convert UPN QR to EPC">
-    <meta property="og:description" content="convert UPN QR to EPC">
-    <meta property="og:url" content="https://mamashin.ru">
+    <meta property="og:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing.">
+    <meta property="og:url" content="{{ request.scheme}}://{{ request.get_host }}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://mamashin.ru/img/og.png">
+    <meta property="og:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
+    
+    <meta property="twitter:title" content="Convert UPN QR to EPC">
+    <meta property="twitter:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
+    <meta property="twitter:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing.">
+   
     <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pico.colors.min.css' %}">
     <script src="{% static 'js/html5-qrcode.min.js' %}"></script>
     <script src="{% static 'js/htmx.min.js' %}"></script>
     <style>
         #reader {
             width: 640px;
         }
+
         @media (max-width: 640px) {
             #reader {
                 width: 100%;
             }
         }
+
+        @media (min-width: 768px) {
+            .qr-code {
+                height: 100%;
+                width: 400px;
+            }
+
+            .scaled {
+                transform: scale(0.5);
+                transform-origin: 0 0;
+            }
+        }
     </style>
-    
+
     <script>
-        let html5QrcodeScanner = null;
-        htmx.onLoad(function () {
-            console.log('onLoad');
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", {
-                    fps: 10,
-                    qrbox: 250,
-                    facingMode: {exact: "environment"},
-                    formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-                    aspectRatio: 1,
-                    experimentalFeatures: {useBarCodeDetectorIfSupported: false}
-                });
-            html5QrcodeScanner.render(onScanSuccess);
+        htmx.defineExtension('json-enc', {
+            onEvent: function (name, evt) {
+                if (name === "htmx:configRequest") {
+                    evt.detail.headers['Content-Type'] = "application/json";
+                }
+            },
+
+            encodeParameters: function (xhr, parameters, elt) {
+                xhr.overrideMimeType('text/json');
+                return (JSON.stringify(parameters));
+            }
         });
-        
-        function onScanSuccess(decodedText, decodedResult) {
-            // handle the scanned code as you like
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-            html5QrcodeScanner.clear();
-            html5QrcodeScanner.stop();
+    </script>
+    <script>
+        function controlCamera(cmd) {
+            function onScanSuccess(decodedText, decodedResult) {
+                {#console.log(`Code matched = ${decodedText}`, decodedResult);#}
+                html5QrcodeScanner.clear();
+                htmx.ajax('POST', '/api/v1/qr/', {
+                    values: decodedResult,
+                    target: '#main',
+                    swap: 'innerHTML'
+                }).then(() => {
+                    {#console.log('ajax done');#}
+                })
+            }
+
+            if (cmd === 'start') {
+                if (typeof html5QrcodeScanner === 'object') {
+                    html5QrcodeScanner.render(onScanSuccess);
+                }
+                if (typeof html5QrcodeScanner === 'undefined') {
+                    html5QrcodeScanner = new Html5QrcodeScanner(
+                        "reader", {
+                            fps: 10,
+                            qrbox: 250,
+                            facingMode: {exact: "environment"},
+                            formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+                            aspectRatio: 1,
+                            experimentalFeatures: {useBarCodeDetectorIfSupported: false}
+                        });
+                    html5QrcodeScanner.render(onScanSuccess);
+                }
+            } else {
+                if (typeof html5QrcodeScanner !== 'undefined') {
+                    html5QrcodeScanner.clear();
+                }
+            }
+        }
+
+        function copyToClipboard(element) {
+            const copyText = window.location.origin + element;
+            navigator.clipboard.writeText(copyText);
         }
     </script>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <main class="container">
-    <h1>Heading</h1>
-    <p>This is paragraph text</p>
+    <div id="main">
+        {% include "nav.html" %}
+        {% block get_qr %}
+            <div id="scan_result">
+                <article class="pico-background-sand-150" data-theme="light">
+                    <p>С помощью этого сервиса вы можете сканировать QR-коды формата UPN (Словения) и получать
+                        информацию о
+                        платежах в формате EPC (Revolut, WISE и т.д.)</p>
+                    <p><kbd>Scan</kbd> - сканировать QR c помощью камеры</p>
+                    <p><kbd>Enter</kbd> - ввести данные о платеже вручную</p>
+                    <p><kbd>Edit</kbd> - редактировать отсканированный код</p>
+                    <p>
+                        После сканирования QR-кода, вы можете скопировать ссылку на этот код, чтобы поделиться ей.
+                    </p>
+                </article>
+            </div>
+        {% endblock get_qr %}
+    </div>
     <div id="reader"></div>
 </main>
+    <hr>
+<footer class="container-fluid" style="text-align: right">
+<small>
+    Copyleft <a href="https://t.me/mamashin" class="secondary">@mamashin</a>
+    </small>
+</footer>
 </body>
 </html>

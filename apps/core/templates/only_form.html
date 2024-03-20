@@ -1,0 +1,9 @@
+            <div>
+                <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}manual_edit{% else %}main{% endif %}">
+                    {% include "custom_form_render.html" %}
+                    {% if mode == 'qr' %}
+                    <input type="hidden" name="qr_edit_form" value="{{ model.rnd }}">
+                    {% endif %}
+                    <input type="submit" value="Сформировать">
+                </form>
+            </div>

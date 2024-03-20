@@ -1,0 +1,14 @@
+<nav id="navigation" hx-push-url="true">
+  <ul>
+      <li>🧾<strong><a href="/">UPN QR to EPC</a></strong></li>
+  </ul>
+  <ul>
+      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=start" hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">Scan</button></li>
+      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=stop" hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">Enter</button></li>
+  {% if mode == 'qr' %}
+      <li><button class="outline contrast" hx-get="/?mode=edit&rid={{ model.rnd }}"  hx-target="#manual_edit" hx-swap="innerHTML">Edit</button></li>
+  {% endif %}
+  </ul>
+</nav>
+
+{% block menu %} {% endblock menu %}
