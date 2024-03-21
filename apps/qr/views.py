@@ -23,6 +23,8 @@ from .models import UpnModel
 
 
 class PostQr(TemplateView):
+    template_name = 'main.html'
+
     def post(self, request, *args, **kwargs):
         if request.htmx:
             create_result = create_upn_model(request.POST)
@@ -39,6 +41,8 @@ class PostQr(TemplateView):
 
 
 class PostManualForm(TemplateView):
+    template_name = 'main.html'
+
     def post(self, request, *args, **kwargs):
         if request.htmx:
             form = QrManualForm(request.POST)
