@@ -40,6 +40,7 @@ def validate_znesek(value):
             params={'value': value},
         )
 
+
 # DB Model for Telegram users
 class UpnModel(TimestampedModel):
     ime_placnika = models.CharField(max_length=33, blank=True)
@@ -59,7 +60,7 @@ class UpnModel(TimestampedModel):
     md5 = models.CharField(max_length=32, blank=False, null=False, unique=True)
     rnd = models.CharField(max_length=6, blank=False, null=False, unique=True, default=rnd)
     data_type = models.CharField(choices=[('qr', 'UPN QR'), ('qr_edit', 'UPN edit'), ('form', 'Form')],
-                                 default='qr', max_length=10)
+                                 default='qr', max_length=10, verbose_name='')
 
     class Meta:
         verbose_name = 'UPN QR'
