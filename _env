@@ -1,7 +1,5 @@
-SECRET_KEY='q*&#5%=-7(vd7nukc4x^0gdbhr2&u%)3d%fh%z2+rg+o9nkp+t'
-
+SECRET_KEY='xxx'
 DJANGO_DEBUG=True
-
-ALLOWED_HOSTS="127.0.0.1, localhost, open-crane-painfully.ngrok-free.app"
-
-SENTRY_DSN=https://xxx.ingest.sentry.io/yyy
+ALLOWED_HOSTS="127.0.0.1, localhost"
+SENTRY_DSN=""
+FULL_URL=http://localhost
