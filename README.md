@@ -1,10 +1,11 @@
-**Django 5+ empty start project**
+**Convert UPN Slovenian QR to EPC EU QR code format**
 
-- [Django](https://www.djangoproject.com/)
-- [Django Rest Framework](https://www.django-rest-framework.org/)
-- [Loguru](https://github.com/Delgan/loguru)
-- [HTTPX](https://www.python-httpx.org/)
-- [Sentry SDK](https://github.com/getsentry/sentry-python)
-- [Redis](https://redis.io/)
-- [RQ](https://python-rq.org/)
-- [Django RQ](https://github.com/rq/django-rq)
+Use this project to convert UPN Slovenian QR code to EPC QR code format for SEPA payments (Revolut, N26, Wise etc.).
+You can share scanned QR code between your devices.
+
+Build with:
+- Python
+- Django
+- HTMX
+- HTML5-qrcode
+- Pico css

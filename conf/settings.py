@@ -9,6 +9,8 @@ from loguru import logger
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 ROOT_DIR = BASE_DIR.parent

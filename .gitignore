@@ -4,3 +4,14 @@ db.sqlite3
 poetry.lock
 logs/*.log
 staticfiles
+
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
