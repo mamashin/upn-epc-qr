@@ -1,18 +1,17 @@
-name: remote ssh command
+name: Deploy on remote host
 on: [push]
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     environment: prod
     steps:
-    - name: executing remote ssh commands using password
+    - name: executing remote ssh commands
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: uname -a
+        script: /opt/upn-epc-qr/src/deploy.sh
         
