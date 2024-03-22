@@ -10,6 +10,7 @@ from apps.core.models import TimestampedModel
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_datetime
 from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.translation import gettext_lazy as _
 
 
 def rnd(rnd_len: int = 6):

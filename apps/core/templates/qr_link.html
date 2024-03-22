@@ -1,4 +1,10 @@
-    <div><small>Ссылка для копирования</small></div>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'ru' %}
+	<div><small>Ссылка для копирования</small></div>
+{% else %}
+    <div><small>Link for sharing QR</small></div>
+{% endif %} 
   <fieldset role="group">
     <input value="{{ request.scheme}}://{{ request.get_host }}/qr/{{ model.rnd }}/" readonly />
       <button data-tooltip="copy to clipboard" onclick="copyToClipboard('/qr/{{ model.rnd }}/')">

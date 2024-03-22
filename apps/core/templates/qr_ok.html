@@ -1,7 +1,11 @@
-{% extends "nav.html" %}
-
+{% extends "nav.html" %}{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 {% block menu %}
+    {%  if LANGUAGE_CODE == 'ru' %}
     <p>QR код для оплаты через Revolut / Wise / ...</p>
+    {% else %}
+    <p>QR code for payment via Revolut / Wise / ...</p>
+    {% endif %}
     <hr />
     <div class="grid">
     <div class="qr-code">

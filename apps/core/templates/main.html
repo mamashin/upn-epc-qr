@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -106,6 +106,7 @@
         }
     </script>
 </head>
+{% get_current_language as LANGUAGE_CODE %}
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <main class="container">
     <div id="main">
@@ -113,6 +114,7 @@
         {% block get_qr %}
             <div id="scan_result">
                 <article class="pico-background-sand-150" data-theme="light">
+                    {% if LANGUAGE_CODE == 'ru' %}
                     <p>С помощью этого сервиса вы можете сканировать QR-коды формата UPN (Словения) и получать
                         информацию о
                         платежах в формате EPC (Revolut, WISE и т.д.)</p>
@@ -122,6 +124,15 @@
                     <p>
                         После сканирования QR-кода, вы можете скопировать ссылку на этот код, чтобы поделиться ей.
                     </p>
+                    {% else %}
+                    <p>With this service, you can scan QR codes in the UPN format (Slovenia) and receive payment information in the EPC format (Revolut, WISE, etc.).</p>
+                    <p><kbd>Scan</kbd> - scan QR with a camera</p>
+                    <p><kbd>Enter</kbd> - manually enter payment details</p>
+                    <p><kbd>Edit</kbd> - edit the scanned code</p>
+                    <p>
+                        After scanning the QR code, you can copy the link to this code to share it.
+                    </p>
+                    {% endif %}
                 </article>
             </div>
         {% endblock get_qr %}
