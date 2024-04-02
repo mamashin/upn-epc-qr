@@ -34,10 +34,10 @@ class UpnBaseModel(ListBaseModel):
     nujno: str = Field(default='')
     koda_namena: str = Field(default='', required=True, max_length=4)
     namen_placila: str = Field(default='', required=True, max_length=42)
-    rok_placila: str = Field(required=True)
+    rok_placila: str = Field(default='')
     iban_prejemnika: str = Field(default='', required=True, max_length=34)
     referenca: str = Field(default='', required=True, max_length=26)
-    ime_prejemnika: str = Field(default='', required=True, max_length=33)
+    ime_prejemnika: str = Field(default='', required=True, max_length=42)
     ulica_prejemnika: str = Field(default='', required=True, max_length=33)
     kraj_prejemnika: str = Field(default='', required=True, max_length=33)
     kontrolna_vsota: str = Field(default='', required=True, max_length=3)
@@ -56,7 +56,9 @@ class UpnBaseModel(ListBaseModel):
 
     @field_validator('rok_placila')
     @classmethod
-    def parse_datum_placila(cls, v:str):
+    def parse_datum_placila(cls, v: str):
+        if not v:
+            return ''
         try:
             ts = datetime.strptime(v, '%d.%m.%Y')
         except ValueError:

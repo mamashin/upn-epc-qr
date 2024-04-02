@@ -53,7 +53,7 @@ class UpnModel(TimestampedModel):
     rok_placila = models.DateTimeField(null=True, blank=True, default=None)
     iban_prejemnika = models.CharField(max_length=34, validators=[validate_iban])
     referenca = models.CharField(max_length=26)
-    ime_prejemnika = models.CharField(max_length=33)
+    ime_prejemnika = models.CharField(max_length=42)
     ulica_prejemnika = models.CharField(max_length=33, blank=True)
     kraj_prejemnika = models.CharField(max_length=33, blank=True)
     kontrolna_vsota = models.CharField(max_length=3, blank=True)
