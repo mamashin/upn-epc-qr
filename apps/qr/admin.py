@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from apps.qr.models import UpnModel
 
@@ -7,7 +8,7 @@ from apps.qr.models import UpnModel
 @admin.register(UpnModel)
 class UpnModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'ime_placnika', 'ime_prejemnika', 'znesek', 'rok_placila_format', 'created_format',
-                    'rnd', 'data_type')
+                    'qr_link', 'data_type')
     readonly_fields = ('created', 'md5', 'modified', 'rnd')
     search_fields = ('ime_placnika', 'ime_prejemnika')
 
@@ -21,3 +22,7 @@ class UpnModelAdmin(admin.ModelAdmin):
         if obj.created:
             return obj.created.strftime('%d.%m.%y %H:%M')
 
+    @staticmethod
+    @admin.display(description=format_html(f"<center>QR link</center>"))
+    def qr_link(obj):
+        return format_html(f"<center><a href='/qr/{obj.rnd}' target='_blank'>{obj.rnd}</a></center>")
