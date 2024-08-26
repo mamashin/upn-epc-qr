@@ -1,22 +1,21 @@
 {% extends "main.html" %}
-
+{% load i18n %}
 {% block get_qr %}
     {% if model %}
-    <p>EPC QR код для оплаты через Revolut / Wise / ...</p>
-    <hr />
-    <div class="grid">
-    <div class="qr-code">
-        <img alt="EPC QR code" src="data:image/png;base64,{{img}}" />
-    <hr />
-        {% include 'qr_link.html' %}
-    </div>
-    <div id="manual_edit"></div>
-    </div>
-    {%  else %}  {# If QR id not found #}
-    <article class="pico-background-pink-850">
-        <p><code>¯\_(ツ)_/¯</code></p>
-  QR код не найден. Отсканируйте другой или введите данные о платеже вручную.
-</article>
+        <p>{% trans "EPC QR code for payment via Revolut / N26 / Wise" %}</p>
+        <hr/>
+        <div class="grid">
+            <div class="qr-code">
+                <img alt="EPC QR code" src="data:image/png;base64,{{ img }}"/>
+                <hr/>
+                {% include 'qr_link.html' %}
+            </div>
+            <div id="manual_edit"></div>
+        </div>
+    {% else %}  {# If QR id not found #}
+        <article class="pico-background-pink-850">
+            <p><code>¯\_(ツ)_/¯</code></p>
+            {% trans "QR code not found" %}
+        </article>
     {% endif %}
-    
 {% endblock %}

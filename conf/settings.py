@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikolay Mamashin (mamashin@gmail.com)'
 
+from django.utils.translation import gettext_lazy as _
+
 from pathlib import Path
 from decouple import config # noqa
 from loguru import logger
@@ -45,11 +47,13 @@ ROOT_URLCONF = 'apps.core.urls'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 TIME_ZONE = 'Europe/Ljubljana'
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en'
 LANGUAGES = (
-    ('ru', 'Russian'),
-    ('en', 'English'),
+    ('ru', _('Russian')),
+    ('en', _('English')),
+    ('sl', _('Slovenian')),
 )
+LOCALE_PATHS = (BASE_DIR / 'conf/locale',)
 
 USE_I18N = True
 USE_L10N = True

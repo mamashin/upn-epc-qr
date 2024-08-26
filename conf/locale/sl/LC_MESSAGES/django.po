@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-26 14:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: apps/core/templates/include/main_description.html:2
+msgid ""
+"\n"
+"<p>This service allows you to scan <strong>UPN QR</strong> codes (used in "
+"Slovenia) and obtain payment details in\n"
+"<strong>EPC QR</strong> format compatible with Revolut, Wise, N26 and other "
+"EU banks.</p>\n"
+"<p><kbd>Scan</kbd> - scan QR with a camera</p>\n"
+"<p><kbd>Enter</kbd> - manually enter payment details</p>\n"
+"<p><kbd>Edit</kbd> - edit the scanned code</p>\n"
+"<p>\n"
+"   After scanning the QR code, you can choose to either copy the link to "
+"share it or save it for later use.\n"
+"</p>\n"
+msgstr ""
+"\n"
+"<p>Ta storitev omogoča skeniranje <strong>UPN QR</strong> kod (ki se "
+"uporabljajo v Sloveniji) in prejemanje podatkov o plačilu v formatu "
+"<strong>EPC QR</strong>, ki je združljiv z Revolut, Wise, N26 indrugimi "
+"bančnimi institucijami v EU.\n"
+"<p><kbd>Scan</kbd> - skenirajte QR kodo s kamero</p>\n"
+"<p><kbd>Enter</kbd> - ročno vnesite podatke za plačilo</p>\n"
+"<p><kbd>Edit</kbd> - uredite skenirano kodo</p>\n"
+"<p>\n"
+" Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
+"deliti ali pa jo shranite za kasnejšo uporabo. </p>\n"
+
+#: apps/core/templates/only_form.html:8
+msgid "Create QR"
+msgstr "Ustvarite QR"
+
+#: apps/core/templates/qr_error.html:6
+msgid "Error QR code, only QR codes in UPN QR format are supported"
+msgstr "Napaka QR kode, podprte so samo QR kode v formatu UPN QR"
+
+#: apps/core/templates/qr_error.html:8
+msgid "QR code creation error"
+msgstr "Napaka pri ustvarjanju QR kode"
+
+#: apps/core/templates/qr_link.html:2
+msgid "Link for sharing QR"
+msgstr "Povezava za deljenje QR"
+
+#: apps/core/templates/qr_link.html:5
+msgid "copy to clipboard"
+msgstr "Kopiraj v odložišče"
+
+#: apps/core/templates/qr_ok.html:3 apps/core/templates/qr_open.html:5
+msgid "EPC QR code for payment via Revolut / N26 / Wise"
+msgstr "EPC QR koda za plačilo prek Revolut / N26 / Wise"
+
+#: apps/core/templates/qr_open.html:18
+msgid "QR code not found"
+msgstr "QR koda ni bila najdena"
+
+#: apps/qr/forms.py:24
+msgid "Recipient’s name"
+msgstr "Ime prejemnika"
+
+#: apps/qr/forms.py:25
+msgid "Recipient’s IBAN"
+msgstr "IBAN prejemnika"
+
+#: apps/qr/forms.py:26
+msgid "Amount"
+msgstr "Znesek"
+
+#: apps/qr/forms.py:27
+msgid "Recipient’s reference"
+msgstr "Referenca prejemnika"
+
+#: apps/qr/forms.py:30
+msgid "Bank Association of Slovenia-GIZ"
+msgstr "Združenje bank Slovenije - GIZ"
+
+#: apps/qr/forms.py:31
+msgid "SI56 0203 6025 3863 406"
+msgstr ""
+
+#: apps/qr/forms.py:33
+msgid "SI08 1236-17-345679"
+msgstr ""
+
+#: conf/settings.py:52
+msgid "Russian"
+msgstr "Ruščina"
+
+#: conf/settings.py:53
+msgid "English"
+msgstr "Angleščina"
+
+#: conf/settings.py:54
+msgid "Slovenian"
+msgstr "Slovenščina"

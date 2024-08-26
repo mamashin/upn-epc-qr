@@ -5,18 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark"/>
-    <title>QR EPC Generator</title>
-    <meta name="description" content="Convert UPN QR to EPC QR code">
-    <meta name="keywords" content="qr upn epc slovenia eu">
-    <meta property="og:title" content="Convert UPN QR to EPC">
-    <meta property="og:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing.">
+    <title>QR EPC Builder</title>
+    <meta name="description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
+    <meta name="keywords" content="qr, upn, epc, slovenia, eu, order, payment, plačilni, nalog, generator, builder, revolut, wise, n26">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="UPN QR → EPC QR">
+    <meta property="og:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
     <meta property="og:url" content="{{ request.scheme}}://{{ request.get_host }}">
     <meta property="og:type" content="website">
     <meta property="og:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
-    
-    <meta property="twitter:title" content="Convert UPN QR to EPC">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="QR EPC Builder">
+
+     <!-- Twitter meta tags -->
+    <meta property="twitter:title" content="UPN QR → EPC QR">
     <meta property="twitter:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
-    <meta property="twitter:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing.">
+    <meta property="twitter:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
    
     <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/pico.colors.min.css' %}">
@@ -114,25 +119,7 @@
         {% block get_qr %}
             <div id="scan_result">
                 <article class="pico-background-sand-150" data-theme="light">
-                    {% if LANGUAGE_CODE == 'ru' %}
-                    <p>С помощью этого сервиса вы можете сканировать QR-коды формата UPN (Словения) и получать
-                        информацию о
-                        платежах в формате EPC (Revolut, Wise, Bunq и т.д.)</p>
-                    <p><kbd>Scan</kbd> - сканировать QR c помощью камеры</p>
-                    <p><kbd>Enter</kbd> - ввести данные о платеже вручную</p>
-                    <p><kbd>Edit</kbd> - редактировать отсканированный код</p>
-                    <p>
-                        После сканирования QR-кода, вы можете скопировать ссылку на этот код, чтобы поделиться ей.
-                    </p>
-                    {% else %}
-                    <p>With this service, you can scan QR codes in the UPN format (Slovenia) and receive payment information in the EPC format (Revolut, WISE, etc.).</p>
-                    <p><kbd>Scan</kbd> - scan QR with a camera</p>
-                    <p><kbd>Enter</kbd> - manually enter payment details</p>
-                    <p><kbd>Edit</kbd> - edit the scanned code</p>
-                    <p>
-                        After scanning the QR code, you can copy the link to this code to share it.
-                    </p>
-                    {% endif %}
+                    {% include "include/main_description.html" %}
                 </article>
             </div>
         {% endblock get_qr %}

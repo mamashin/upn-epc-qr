@@ -1,14 +1,33 @@
+{% load i18n %}
 <nav id="navigation" hx-push-url="true">
   <ul>
-      <li>🧾<strong><a href="/">UPN QR to EPC</a></strong></li>
+      <li>🧾<strong><a href="/">&nbsp; UPN QR → EPC QR  {{ mode }}</a></strong></li>
   </ul>
   <ul>
-      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=start" hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">Scan</button></li>
-      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=stop" hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">Enter</button></li>
+      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=start" 
+                  hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">
+          Scan</button></li>
+      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=stop" 
+                  hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">
+          Enter</button></li>
   {% if mode == 'qr' %}
       <li><button class="outline contrast" hx-get="/?mode=edit&rid={{ model.rnd }}"  hx-target="#manual_edit" hx-swap="innerHTML">Edit</button></li>
   {% endif %}
-  </ul>
+  <li>
+      <label>
+          <select name="language" aria-invalid="false">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}
+                  hx-get="/?mode=lang&lang={{ language.code }}&prev_mode={{ mode }}&prev_path={{ request.path }}" hx-swap="none">
+                      {{ language.code|upper }}
+                  </option>
+              {% endfor %}
+          </select>
+      </label>
+  </li>
+</ul>
 </nav>
-
 {% block menu %} {% endblock menu %}

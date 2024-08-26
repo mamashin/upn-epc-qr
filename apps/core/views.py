@@ -2,6 +2,8 @@
 __author__ = 'Nikolay Mamashin (mamashin@gmail.com)'
 
 import json
+
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
@@ -9,10 +11,11 @@ from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from decouple import config
 from loguru import logger
 from django.shortcuts import render
-from django_htmx.http import HttpResponseClientRefresh, trigger_client_event
+from django_htmx.http import HttpResponseClientRefresh, trigger_client_event, HttpResponseClientRedirect, HttpResponseLocation
 
 from apps.qr.forms import QrManualForm
 from apps.qr.models import UpnModel
+
 
 @require_GET
 def favicon(request) -> HttpResponse:
@@ -20,7 +23,7 @@ def favicon(request) -> HttpResponse:
         (
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'
             + '<text y=".9em" font-size="90">🧾</text>'
-            + "</svg>"
+            + '</svg>'
         ),
         content_type="image/svg+xml",
     )
@@ -54,11 +57,24 @@ class MainPage(TemplateView):
                                       {"mode": "qr", "show_form": True, 'model': edit_model,
                                        "form": QrManualForm(instance=edit_model)})
                     return response
+
+                if mode == "lang":
+                    lang = request.GET.get("lang", "en")
+                    prev_mode = request.GET.get("prev_mode")
+                    prev_path = request.GET.get("prev_path", "/")
+                    response = HttpResponseClientRedirect(f'{prev_path}')
+                    if prev_mode:
+                        response = HttpResponseClientRedirect(f'{prev_path}?mode={prev_mode}')
+                    # response = HttpResponseLocation(f'/?mode=stop', target="#manual_edit", swap="innerHTML")
+                    # response = HttpResponseClientRefresh()
+                    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang, max_age=60 * 60 * 24 * 365)
+                    return response
         else:
             return render(request, self.template_name, self.get_context_data())
 
     def post(self, request, *args, **kwargs):
-        logger.info("MainPage POST")
-        logger.debug(request.body)
+        if config("DEBUG", default=False, cast=bool):
+            logger.info("MainPage POST")
+            logger.debug(request.body)
 
         return render(request, self.template_name, self.get_context_data())
