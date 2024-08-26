@@ -14,6 +14,7 @@
     <meta property="og:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
     <meta property="og:url" content="{{ request.scheme}}://{{ request.get_host }}">
     <meta property="og:type" content="website">
+    <meta property="og:logo" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
     <meta property="og:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="QR EPC Builder">
@@ -50,6 +51,11 @@
             .scaled {
                 transform: scale(0.5);
                 transform-origin: 0 0;
+            }
+        }
+        @media (min-width: 450px) {
+            .uppercase-on-large {
+                text-transform: uppercase;
             }
         }
     </style>
@@ -113,7 +119,7 @@
 </head>
 {% get_current_language as LANGUAGE_CODE %}
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-<main class="container">
+<main class="container-fluid">
     <div id="main">
         {% include "nav.html" %}
         {% block get_qr %}
