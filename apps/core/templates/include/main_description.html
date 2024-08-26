@@ -1,3 +1,4 @@
+{% load static %}
 {% load i18n %}
 {% blocktranslate %}
 <p>This service allows you to scan <strong>UPN QR</strong> codes (used in Slovenia) and obtain payment details in
@@ -9,3 +10,6 @@
    After scanning the QR code, you can choose to either copy the link to share it or save it for later use.
 </p>
 {% endblocktranslate %}
+
+
+<img src="{% static 'img/stroska.png' %}" alt="Stroska" width="320">
