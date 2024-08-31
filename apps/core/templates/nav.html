@@ -4,20 +4,21 @@
       <li><small  class="uppercase-on-large"><a href="/">upn qr → epc qr</a></small></li>
   </ul>
   <ul>
-      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=start" 
+  {# mode: manual, scan & qr  #}
+      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="{% url 'qr_scan' %}" 
                   hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">
           Scan</button></li>
-      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="/?mode=stop" 
+      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="{% url 'qr_manual' %}" 
                   hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">
           Enter</button></li>
   {% if mode == 'qr' %}
-      <li><button class="outline contrast" hx-get="/?mode=edit&rid={{ model.rnd }}" 
+      <li><button class="outline contrast" hx-get="{% url 'qr_edit' model.rnd %}" 
                   hx-target="#manual_edit" hx-swap="innerHTML">Edit</button></li>
   {% endif %}
   <li>
       <label>
-          <select name="lang" aria-invalid="false" hx-trigger="change"  
-                  hx-get="/?mode=lang&prev_mode={{ mode }}&prev_path={{ request.path }}" hx-swap="none">
+          <select name="lang" aria-invalid="false" hx-trigger="change" id="language-select"
+                  hx-get="/lang/?prev_path={% if mode == 'scan' or not mode %}{{ request.path }}{% elif mode == 'qr' %}/qr/{{ model.rnd }}/{% else %}/qr/manual/{% endif %}" hx-swap="none">
               {% get_current_language as LANGUAGE_CODE %}
               {% get_available_languages as LANGUAGES %}
               {% get_language_info_list for LANGUAGES as languages %}

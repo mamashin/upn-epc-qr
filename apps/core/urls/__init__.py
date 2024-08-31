@@ -15,11 +15,17 @@ api = [
 ]
 
 urlpatterns = [
-    path("api/", include(api)),
+    path("qr/manual/", MainPage.as_view(), name='qr_manual', kwargs={'mode': 'manual'}),
+    path("qr/scan/", MainPage.as_view(), name='qr_scan', kwargs={'mode': 'scan'}),
+    path("qr/<str:rnd_id>/edit/", MainPage.as_view(), name='qr_edit', kwargs={'mode': 'edit'}),
+    path("qr/<str:rnd_id>/", GetSaveQr.as_view(), name='qr_open', kwargs={'mode': 'open'}),
+
+    path('lang/', MainPage.as_view(), name='main_page_lang', kwargs={'mode': 'lang'}),
+    path('', MainPage.as_view(), name='main_page'),
+
     path("admin/", admin.site.urls),
-    path('qr/<str:rnd_id>/', GetSaveQr.as_view(), name='open_qr'),
-    path('', MainPage.as_view()),
     path("favicon.ico", favicon),
+    path("api/", include(api)),
 ]
 
 if settings.DEBUG:

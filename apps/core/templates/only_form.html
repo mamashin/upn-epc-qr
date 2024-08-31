@@ -1,10 +1,10 @@
 {% load i18n %}
-            <div>
-                <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}manual_edit{% else %}main{% endif %}">
-                    {% include "custom_form_render.html" %}
-                    {% if mode == 'qr' %}
-                    <input type="hidden" name="qr_edit_form" value="{{ model.rnd }}">
-                    {% endif %}
-                    <input type="submit" value="{% trans "Create QR" %}">
-                </form>
-            </div>
+<div>
+    <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}main{% else %}scan_data{% endif %}" hx-swap="innerHTML">
+        {% include "custom_form_render.html" %}
+        {% if mode == 'qr' %}
+            <input type="hidden" name="qr_edit_form" value="{{ model.rnd }}">
+        {% endif %}
+        <input type="submit" value="{% trans "Create QR" %}">
+    </form>
+</div>

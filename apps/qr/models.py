@@ -13,31 +13,34 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.translation import gettext_lazy as _
 
 
-def rnd(rnd_len: int = 6):
-    return f'%0{rnd_len}x' % random.randrange(16**rnd_len)
+def rnd(rnd_len: int = 6) -> str:
+    return f'%0{rnd_len}x' % random.randrange(16**rnd_len)  # noqa
 
 
-def md5_hash(model: models.Model):
+def md5_hash(model: models.Model) -> str:
+    """
+    Calculate MD5 hash of the model instance
+    """
     md5_pass_fields_list = ['id', 'md5', 'rnd', 'data_type', 'created', 'modified']
     fields = [f.name for f in model._meta.get_fields() if f.name not in md5_pass_fields_list]
     data = {f: getattr(model, f) for f in fields}
     return hashlib.md5(json.dumps(data, sort_keys=True, cls=DjangoJSONEncoder).encode('utf-8')).hexdigest()
 
 
-def validate_iban(value):
+def validate_iban(value) -> None:
     pattern = r'^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$'
     match = re.match(pattern, value.replace(' ', ''))
     if not match:
         raise ValidationError(
-            'IBAN должен начинаться с 2х букв и далее цифры',
+            _('IBAN must start with 2 letters followed by digits'),
             params={'value': value},
         )
 
 
-def validate_znesek(value):
+def validate_znesek(value) -> None:
     if value < 0.01 or 999999.99 < value:
         raise ValidationError(
-            ' Сумма не может быть меньше 0.01 и больше 999999,99',
+            _('The amount cannot be less than 0.01 and more than 999999.99'),
             params={'value': value},
         )
 

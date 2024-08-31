@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 14:09+0200\n"
+"POT-Creation-Date: 2024-08-31 23:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/core/templates/include/main_description.html:2
+#: apps/core/templates/include/main_description.html:3
 msgid ""
 "\n"
 "<p>This service allows you to scan <strong>UPN QR</strong> codes (used in "
 "Slovenia) and obtain payment details in\n"
-"<strong>EPC QR</strong> format compatible with Revolut, Wise, N26 and other "
+"<strong>EPC QR</strong> format compatible with Revolut, Bunq, N26 and other "
 "EU banks.</p>\n"
 "<p><kbd>Scan</kbd> - scan QR with a camera</p>\n"
 "<p><kbd>Enter</kbd> - manually enter payment details</p>\n"
@@ -53,11 +53,11 @@ msgstr ""
 msgid "copy to clipboard"
 msgstr ""
 
-#: apps/core/templates/qr_ok.html:3 apps/core/templates/qr_open.html:5
-msgid "EPC QR code for payment via Revolut / N26 / Wise"
+#: apps/core/templates/qr_ok.html:4 apps/core/templates/qr_open.html:5
+msgid "EPC QR code for payment via Revolut / Bunq / N26 / etc.."
 msgstr ""
 
-#: apps/core/templates/qr_open.html:18
+#: apps/core/templates/qr_open.html:22
 msgid "QR code not found"
 msgstr ""
 
@@ -87,6 +87,14 @@ msgstr ""
 
 #: apps/qr/forms.py:33
 msgid "SI08 1236-17-345679"
+msgstr ""
+
+#: apps/qr/models.py:35
+msgid "IBAN must start with 2 letters followed by digits"
+msgstr ""
+
+#: apps/qr/models.py:43
+msgid "The amount cannot be less than 0.01 and more than 999999.99"
 msgstr ""
 
 #: conf/settings.py:52

@@ -14,7 +14,7 @@ from loguru import logger
 from result import Result, is_ok, is_err
 from django import forms
 from django.shortcuts import render
-from django_htmx.http import retarget
+from django_htmx.http import retarget, push_url
 
 from .epc import generate_qr_code
 from .forms import QrForm, QrManualForm
@@ -32,7 +32,8 @@ class PostQr(TemplateView):
                 self.extra_context = {"img": create_result.value["img"],
                                       "model": create_result.value["model"],
                                       "mode": "qr"}
-                return render(request, "qr_ok.html", self.get_context_data())
+                return push_url(render(request, "qr_ok.html", self.get_context_data()),
+                                f"/qr/{create_result.value['model'].rnd}/")
             else:
                 logger.error(f'Error create_upn_model: {create_result.err}')
                 return render(request, "qr_error.html", self.get_context_data())
@@ -66,12 +67,14 @@ class PostManualForm(TemplateView):
                 result = render(request, "qr_ok.html",
                                 {"mode": "qr", "show_form": False, "form": form, 'model': model,
                                  'img': qr_img.value})
-                return retarget(result, '#main')
-            else:
-                template = "only_form.html" if manual_qr_edit else "form_manual.html"
+                return push_url(retarget(result, '#main'), f"/qr/{model.rnd}/")
+            else:  # Not valid form
+                # template = "only_form.html" if manual_qr_edit else "form_manual.html"
+                template = "form_manual.html"
                 mode = "qr" if manual_qr_edit else "manual"
-                return render(request, template,
-                              {"mode": mode, "show_form": True, "form": form, "model": model})
+                logger.info(f'Mode: {mode}')
+                return retarget(render(request, template, {"mode": mode, "show_form": True, "form": form,
+                                                           "model": model}), '#main')
 
         return render(request, self.template_name, self.get_context_data())
 
@@ -91,5 +94,6 @@ class GetSaveQr(TemplateView):
                 img = img.value
         response = render(request,
                           self.template_name,
-                          {"mode": mode, "show_form": show_form, "model": exist_model, "img": img})
+                          {"mode": mode, "show_form": show_form, "model": exist_model, "img": img,
+                           "direct_get": True})
         return response

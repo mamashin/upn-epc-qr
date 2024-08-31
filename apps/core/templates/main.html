@@ -5,31 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark"/>
-    <title>QR EPC Builder</title>
-    <meta name="description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
-    <meta name="keywords" content="qr, upn, epc, slovenia, eu, order, payment, plačilni, nalog, generator, builder, revolut, wise, n26">
+    <title>UPN QR to EPC QR Converter</title>
+    <meta name="description"
+          content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
+    <meta name="keywords"
+          content="qr, upn, epc, slovenia, eu, order, payment, plačilni, nalog, generator, builder, converter, revolut, wise, bunq, n26">
 
     <!-- Open Graph meta tags -->
     <meta property="og:title" content="UPN QR → EPC QR">
-    <meta property="og:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
-    <meta property="og:url" content="{{ request.scheme}}://{{ request.get_host }}">
+    <meta property="og:description"
+          content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}">
     <meta property="og:type" content="website">
-    <meta property="og:logo" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
-    <meta property="og:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
+    <meta property="og:logo" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/stroska.png' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/stroska.png' %}">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="QR EPC Builder">
 
-     <!-- Twitter meta tags -->
+    <!-- Twitter meta tags -->
     <meta property="twitter:title" content="UPN QR → EPC QR">
-    <meta property="twitter:image" content="{{ request.scheme}}://{{ request.get_host }}{% static 'img/stroska.png' %}">
-    <meta property="twitter:description" content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
-   
+    <meta property="twitter:image"
+          content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/stroska.png' %}">
+    <meta property="twitter:description"
+          content="A service to convert Slovenian UPN QR codes into EPC format for easy payment processing">
+
     <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/pico.colors.min.css' %}">
     <script src="{% static 'js/html5-qrcode.min.js' %}"></script>
     <script src="{% static 'js/htmx.min.js' %}"></script>
-    {%  if not debug %}
-    <script async data-id="101447793" src="/1ae93131f4aca.js"></script>
+    {% if not debug %}
+        <script async data-id="101447793" src="/1ae93131f4aca.js"></script>
     {% endif %}
     <style>
         #reader {
@@ -53,28 +58,22 @@
                 transform-origin: 0 0;
             }
         }
+
         @media (min-width: 450px) {
             .uppercase-on-large {
                 text-transform: uppercase;
             }
         }
     </style>
-
     <script>
-        htmx.defineExtension('json-enc', {
-            onEvent: function (name, evt) {
-                if (name === "htmx:configRequest") {
-                    evt.detail.headers['Content-Type'] = "application/json";
-                }
-            },
-
-            encodeParameters: function (xhr, parameters, elt) {
-                xhr.overrideMimeType('text/json');
-                return (JSON.stringify(parameters));
-            }
-        });
-    </script>
-    <script>
+        htmx.on("htmx:pushedIntoHistory", function(event) {
+            console.log(window.location.pathname)
+            const currentPath = window.location.pathname;
+            {#console.log(event)#}
+            document.getElementById('language-select').setAttribute('hx-get', `/lang/?prev_path=${currentPath}`);
+            htmx.process(htmx.find('#language-select'))
+});
+        
         function controlCamera(cmd) {
             function onScanSuccess(decodedText, decodedResult) {
                 {#console.log(`Code matched = ${decodedText}`, decodedResult);#}
@@ -116,6 +115,7 @@
             navigator.clipboard.writeText(copyText);
         }
     </script>
+
 </head>
 {% get_current_language as LANGUAGE_CODE %}
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -124,18 +124,35 @@
         {% include "nav.html" %}
         {% block get_qr %}
             <div id="scan_result">
-                <article class="pico-background-sand-150" data-theme="light">
-                    {% include "include/main_description.html" %}
-                </article>
+                {% if not direct_get %} {# If request via HTMX #}
+                    <article class="pico-background-sand-150" data-theme="light">
+                        {% include "include/main_description.html" %}
+                    </article>
+                {% endif %}
+                {% if direct_get %} {# Direct requests #}
+                    {% if mode == 'scan' %} {# Scan mode #}
+                        <script>
+                            window.onload = function () {
+                                controlCamera('start');
+                            }
+                        </script>
+                    {% endif %}
+                    {% if mode == 'manual' or mode == 'qr' %} {# Manual form fill mode #}
+                        <div id="scan_data" class="grid">
+                            {% include "only_form.html" %}
+                            <div></div>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         {% endblock get_qr %}
     </div>
     <div id="reader"></div>
 </main>
-    <hr>
+<hr>
 <footer class="container-fluid" style="text-align: right">
-<small>
-    Copyleft <a href="https://t.me/mamashin" class="secondary">@mamashin</a>
+    <small>
+        Copyleft <a href="https://t.me/mamashin" class="secondary">@mamashin</a>
     </small>
 </footer>
 </body>
