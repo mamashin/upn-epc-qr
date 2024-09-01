@@ -53,7 +53,7 @@ class MainPage(TemplateView):
 
                 if mode == "edit":  # Manual edit existing QR code (HTMX mode)
                     rnd = kwargs.get("rnd_id")
-                    logger.info(f"Edit: {rnd}")
+                    # info(f"Edit: {loggerrnd}")
                     edit_model = UpnModel.objects.filter(rnd=rnd).first()
                     edit_model.data_type = "qr_edit"
                     response = render(request, "only_form.html",
@@ -83,9 +83,9 @@ class MainPage(TemplateView):
 
         if kwargs.get("mode") == "edit":  # Direct GET
             rnd = kwargs.get("rnd_id")
-            logger.info(f"Edit: {rnd}")
+            # logger.info(f"Edit: {rnd}")
             edit_model = UpnModel.objects.filter(rnd=rnd).first()
-            logger.info(f"Edit model: {edit_model}")
+            # logger.info(f"Edit model: {edit_model}")
             if not edit_model:
                 return render(request, "qr_open.html", {"mode": None})
             edit_model.data_type = "qr_edit"

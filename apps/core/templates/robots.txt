@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /qr/scan/
+Allow: /qr/manual/
+Disallow: /qr/*
+Disallow: /admin/
+
+Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml
