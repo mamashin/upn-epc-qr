@@ -65,8 +65,6 @@ msgid "copy to clipboard"
 msgstr "Kopiraj v odložišče"
 
 #: apps/core/templates/qr_ok.html:4 apps/core/templates/qr_open.html:5
-#, fuzzy
-#| msgid "EPC QR code for payment via Revolut / N26 / Wise"
 msgid "EPC QR code for payment via Revolut / Bunq / N26 / etc.."
 msgstr "EPC QR koda za plačilo prek Revolut / Bunq / N26 / etc.."
 
