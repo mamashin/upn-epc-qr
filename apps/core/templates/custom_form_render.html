@@ -1,11 +1,23 @@
+{% if form.errors %}
+    {# TODO: Translate #}
+    <div class="space"></div>
+    <span class="tertiary-text"><i>warning</i> Ошибка при заполнении данных</span>
+{% endif %}
 {% for field in form %}
-    <div>
-        {{ field.label_tag }}
+    {% if not field.is_hidden %}
+        <div class="grid">
+            <div class="s12 m12 l10">
+                <div class="field label medium border {% if field.errors %}invalid{% endif %}">
+                    {{ field }}
+                    <label class="active">{{ field.label_tag }}</label>
+                    {#                    <span class="helper">Helper text</span>#}
+                    {% for field_error in  field.errors %}
+                        <span class="error">{{ field_error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
         {{ field }}
-        {% if field.errors %}
-            {% for error in field.errors %}
-                <small id="invalid-helper">{{ error|escape }}</small>
-            {% endfor %}
-        {% endif %}
-    </div>
+    {% endif %}
 {% endfor %}

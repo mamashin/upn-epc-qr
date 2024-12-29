@@ -27,9 +27,15 @@ class QrManualForm(forms.ModelForm):
             "referenca": _("Recipient’s reference")
         }
         widgets = {
-            "ime_prejemnika": forms.TextInput(attrs={"placeholder": _("Bank Association of Slovenia-GIZ")}),
-            "iban_prejemnika": forms.TextInput(attrs={"placeholder": _("SI56 0203 6025 3863 406")}),
-            "znesek": forms.NumberInput(attrs={"placeholder": "0,00"}),
-            "referenca": forms.TextInput(attrs={"placeholder": _("SI08 1236-17-345679")}),
+            "ime_prejemnika": forms.TextInput(attrs={
+                "placeholder": _("Bank Association of Slovenia-GIZ"),
+                "class": "active"
+            }),
+            "iban_prejemnika": forms.TextInput(attrs={
+                "placeholder": _("SI56 0203 6025 3863 406"),
+                "class": "active"
+            }),
+            "znesek": forms.NumberInput(attrs={"placeholder": "0,00", "class": "active"}),
+            "referenca": forms.TextInput(attrs={"placeholder": _("SI08 1236-17-345679"), "class": "active"}),
             "data_type": forms.HiddenInput(),  # Make data_type hidden
         }

@@ -2,22 +2,9 @@
 {% load i18n %}
 {% block get_qr %}
     {% if model %}
-        <p>{% trans "EPC QR code for payment via Revolut / Bunq / N26 / etc.." %}</p>
-        <hr/>
-        <div class="grid" id="scan_result">
-            <div class="qr-code">
-                <img alt="EPC QR code" src="data:image/png;base64,{{ img }}"/>
-                <hr/>
-                {% include 'qr_link.html' %}
-            </div>
-            <div id="manual_edit">
-                {% if direct_get and form %}
-                    {% include 'only_form.html' %}
-                {% endif %}
-            </div>
-        </div>
+        {% include 'qr_show.html' %}
     {% else %}  {# If QR id not found #}
-        <article class="pico-background-pink-850">
+        <article class="error-text">
             <p><code>¯\_(ツ)_/¯</code></p>
             {% trans "QR code not found" %}
         </article>

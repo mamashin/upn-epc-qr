@@ -36,6 +36,7 @@ class PostQr(TemplateView):
                                 f"/qr/{create_result.value['model'].rnd}/")
             else:
                 logger.error(f'Error create_upn_model: {create_result.err}')
+                # self.extra_context = {"mode": "qr"}
                 return render(request, "qr_error.html", self.get_context_data())
 
         return render(request, self.template_name, self.get_context_data())

@@ -1,0 +1,17 @@
+{% load i18n %}
+<p class="large-text">{% trans "EPC QR code for payment via Revolut / Bunq / N26 / etc.." %}</p>
+<div class="grid" id="scan_result">
+    <div class="s12 m6 l6 center-align">
+        <hr/>
+        <div class="space"></div>
+        <img alt="EPC QR code" src="data:image/png;base64,{{ img }}" class="qr-code"/>
+        <div class="space"></div>
+        <hr/>
+        {% include 'qr_link.html' %}
+    </div>
+    <div id="manual_edit" class="s12 m6 l6">
+        {% if direct_get and form %}
+            {% include 'only_form.html' %}
+        {% endif %}
+    </div>
+</div>

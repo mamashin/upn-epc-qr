@@ -1,35 +1,19 @@
 {% load i18n %}
-<nav id="navigation" hx-push-url="true">
-  <ul>
-      <li><small  class="uppercase-on-large"><a href="/">upn qr → epc qr</a></small></li>
-  </ul>
-  <ul>
+<nav id="navigation" hx-push-url="true" class="top">
+      <div class="m l"><a href="/"><i>home</i></a></div>
+    <div class="max"></div>
   {# mode: manual, scan & qr  #}
-      <li><button {% if mode != 'scan' %}class="outline" {% else %}disabled{% endif %} hx-get="{% url 'qr_scan' %}" 
+      <button {% if mode != 'scan' %}class="small-round" {% else %}disabled{% endif %} hx-get="{% url 'qr_scan' %}"
                   hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">
-          Scan</button></li>
-      <li><button {% if mode != 'manual' %}class="outline" {% else %}disabled{% endif %} hx-get="{% url 'qr_manual' %}" 
+          <i>qr_code_scanner</i><span class="m l">Scan</span></button>
+      <button {% if mode != 'manual' %}class="small-round" {% else %}disabled{% endif %} hx-get="{% url 'qr_manual' %}"
                   hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">
-          Enter</button></li>
+          <i>format_list_bulleted</i><span class="m l">Enter</span></button>
   {% if mode == 'qr' %}
-      <li><button class="outline contrast" hx-get="{% url 'qr_edit' model.rnd %}" 
-                  hx-target="#manual_edit" hx-swap="innerHTML">Edit</button></li>
+      <button class="small-round" hx-get="{% url 'qr_edit' model.rnd %}" hx-target="#manual_edit" hx-swap="innerHTML">
+          <i>edit_note</i><span class="m l">Edit</span></button>
   {% endif %}
-  <li>
-      <label>
-          <select name="lang" aria-invalid="false" hx-trigger="change" id="language-select"
-                  hx-get="/lang/?prev_path={% if mode == 'scan' or not mode %}{{ request.path }}{% elif mode == 'qr' %}/qr/{{ model.rnd }}/{% else %}/qr/manual/{% endif %}" hx-swap="none">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                      {{ language.code|upper }}
-                  </option>
-              {% endfor %}
-          </select>
-      </label>
-  </li>
-</ul>
+{% include "include/language.html" %}
+
 </nav>
 {% block menu %} {% endblock menu %}

@@ -35,7 +35,7 @@ def generate_qr_code(data: UpnModel) -> Result:
         font_descr = ImageFont.truetype('static/fonts/iosevka-term-regular.ttf', 44)
 
         img_width, img_height = img.size
-        text_cost = f'€ {data.znesek}'
+        text_cost = f'€ {data.znesek:.2f}'
         text_referenca = data.ime_prejemnika
         text_cost_width, _ = get_text_dimensions(text_cost, font_cost)
         text_referenca_width, _ = get_text_dimensions(text_referenca, font_descr)

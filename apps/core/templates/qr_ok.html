@@ -1,14 +1,5 @@
 {% extends "nav.html" %}
 {% load i18n %}
 {% block menu %}
-    <p>{% trans "EPC QR code for payment via Revolut / Bunq / N26 / etc.."%}</p>
-    <hr />
-    <div class="grid">
-    <div class="qr-code">
-        <img alt="EPC QR CODE" src="data:image/png;base64,{{img}}" />
-    <hr />
-    {% include 'qr_link.html' %}
-    </div>
-    <div id="manual_edit"></div>
-    </div>
+    {% include 'qr_show.html' %}
 {% endblock %}

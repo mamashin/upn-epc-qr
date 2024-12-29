@@ -1,7 +1,7 @@
 {% extends "nav.html" %}
 {% load i18n %}
 {% block menu %}
-<article class="pico-background-pink-600">
+<article class="error-text">
 {% if not qr_create_error %}
   {% trans "Error QR code, only QR codes in UPN QR format are supported" %}
 {% else %}
