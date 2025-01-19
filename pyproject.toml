@@ -21,6 +21,7 @@ django-htmx = "^1.17.2"
 pydantic = "^2.6.4"
 result = "^0.17.0"
 segno = "^1.6.1"
+fpdf2 = "^2.8.2"
 
 
 [build-system]

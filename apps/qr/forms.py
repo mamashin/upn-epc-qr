@@ -35,7 +35,7 @@ class QrManualForm(forms.ModelForm):
                 "placeholder": _("SI56 0203 6025 3863 406"),
                 "class": "active"
             }),
-            "znesek": forms.NumberInput(attrs={"placeholder": "0,00", "class": "active"}),
+            "znesek": forms.NumberInput(attrs={"placeholder": "0,00", "class": "active", "step": "0.01", "min": "0"}),
             "referenca": forms.TextInput(attrs={"placeholder": _("SI08 1236-17-345679"), "class": "active"}),
             "data_type": forms.HiddenInput(),  # Make data_type hidden
         }

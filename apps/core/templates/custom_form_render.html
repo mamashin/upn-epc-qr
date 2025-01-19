@@ -1,7 +1,7 @@
+{% load i18n %}
 {% if form.errors %}
-    {# TODO: Translate #}
     <div class="space"></div>
-    <span class="tertiary-text"><i>warning</i> Ошибка при заполнении данных</span>
+    <span class="tertiary-text"><i>warning</i> {% trans "Error filling out the form" %}</span>
 {% endif %}
 {% for field in form %}
     {% if not field.is_hidden %}

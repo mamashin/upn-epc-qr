@@ -2,8 +2,7 @@
 <div>
     <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}main{% else %}scan_data{% endif %}" hx-swap="innerHTML">
     {% if mode == 'manual' %}
-        {# TODO: Translate  #}
-        <span class="large-text secondary-text">Введите данные для формирования нового счета</span>
+        <span class="large-text secondary-text">{% trans "Enter the data to create a new invoice" %}</span>
     {% endif %}
         {% include "custom_form_render.html" %}
         {% if mode == 'qr' %}

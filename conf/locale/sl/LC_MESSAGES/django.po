@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 23:52+0200\n"
+"POT-Creation-Date: 2025-01-19 18:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/core/templates/include/main_description.html:3
+#: apps/core/templates/custom_form_render.html:4
+msgid "Error filling out the form"
+msgstr "Napaka pri izpolnjevanju obrazca"
+
 msgid ""
 "\n"
-"<p>This service allows you to scan <strong>UPN QR</strong> codes (used in "
-"Slovenia) and obtain payment details in\n"
-"<strong>EPC QR</strong> format compatible with Revolut, Bunq, N26 and other "
-"EU banks.</p>\n"
-"<p><kbd>Scan</kbd> - scan QR with a camera</p>\n"
-"<p><kbd>Enter</kbd> - manually enter payment details</p>\n"
-"<p><kbd>Edit</kbd> - edit the scanned code</p>\n"
-"<p>\n"
-"   After scanning the QR code, you can choose to either copy the link to "
-"share it or save it for later use.\n"
-"</p>\n"
+"        <p>This service allows you to scan <strong>UPN QR</strong> codes "
+"(used in Slovenia) and obtain payment details\n"
+"            in <strong>EPC QR</strong> format compatible with Revolut, Bunq, "
+"N26 and other EU banks.</p>\n"
+"        "
 msgstr ""
 "\n"
 "<p>Ta storitev omogoča skeniranje <strong>UPN QR</strong> kod (ki se "
 "uporabljajo v Sloveniji) in prejemanje podatkov o plačilu v formatu "
 "<strong>EPC QR</strong>, ki je združljiv z Revolut, Bunq, N26 indrugimi "
 "bančnimi institucijami v EU.\n"
-"<p><kbd>Scan</kbd> - skenirajte QR kodo s kamero</p>\n"
-"<p><kbd>Enter</kbd> - ročno vnesite podatke za plačilo</p>\n"
-"<p><kbd>Edit</kbd> - uredite skenirano kodo</p>\n"
-"<p>\n"
-" Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
-"deliti ali pa jo shranite za kasnejšo uporabo. </p>\n"
+"        "
 
-#: apps/core/templates/only_form.html:8
+#: apps/core/templates/include/main_description.html:8
+msgid "scan QR with a camera"
+msgstr "kenirajte QR kodo s kamero"
+
+#: apps/core/templates/include/main_description.html:9
+msgid "manually enter payment details"
+msgstr "ročno vnesite podatke za plačilo"
+
+#: apps/core/templates/include/main_description.html:10
+msgid "edit the scanned code"
+msgstr "uredite skenirano kodo"
+
+#: apps/core/templates/include/main_description.html:12
+msgid ""
+"After scanning the QR code, you can choose to either copy the link to share "
+"it or save it for later use."
+msgstr "Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
+"deliti ali pa jo shranite za kasnejšo uporabo."
+
+#: apps/core/templates/only_form.html:5
+msgid "Enter the data to create a new invoice"
+msgstr "Vnesite podatke za ustvarjanje novega računa"
+
+#: apps/core/templates/only_form.html:14
 msgid "Create QR"
 msgstr "Ustvarite QR"
 
@@ -56,21 +71,21 @@ msgstr "Napaka QR kode, podprte so samo QR kode v formatu UPN QR"
 msgid "QR code creation error"
 msgstr "Napaka pri ustvarjanju QR kode"
 
-#: apps/core/templates/qr_link.html:2
+#: apps/core/templates/qr_link.html:6
 msgid "Link for sharing QR"
 msgstr "Povezava za deljenje QR"
 
-#: apps/core/templates/qr_link.html:5
+#: apps/core/templates/qr_link.html:10
 msgid "copy to clipboard"
 msgstr "Kopiraj v odložišče"
 
-#: apps/core/templates/qr_ok.html:4 apps/core/templates/qr_open.html:5
-msgid "EPC QR code for payment via Revolut / Bunq / N26 / etc.."
-msgstr "EPC QR koda za plačilo prek Revolut / Bunq / N26 / etc.."
-
-#: apps/core/templates/qr_open.html:22
+#: apps/core/templates/qr_open.html:9
 msgid "QR code not found"
 msgstr "QR koda ni bila najdena"
+
+#: apps/core/templates/qr_show.html:2
+msgid "EPC QR code for payment via Revolut / Bunq / N26 / etc.."
+msgstr "EPC QR koda za plačilo prek Revolut / Bunq / N26 / etc.."
 
 #: apps/qr/forms.py:24
 msgid "Recipient’s name"
@@ -88,15 +103,15 @@ msgstr "Znesek"
 msgid "Recipient’s reference"
 msgstr "Referenca prejemnika"
 
-#: apps/qr/forms.py:30
+#: apps/qr/forms.py:31
 msgid "Bank Association of Slovenia-GIZ"
 msgstr "Združenje bank Slovenije - GIZ"
 
-#: apps/qr/forms.py:31
+#: apps/qr/forms.py:35
 msgid "SI56 0203 6025 3863 406"
 msgstr ""
 
-#: apps/qr/forms.py:33
+#: apps/qr/forms.py:39
 msgid "SI08 1236-17-345679"
 msgstr ""
 
@@ -108,14 +123,14 @@ msgstr "IBAN mora začeti z 2 črkami, ki ji sledijo številke"
 msgid "The amount cannot be less than 0.01 and more than 999999.99"
 msgstr "Znesek ne sme biti manjši od 0,01 in več kot 999999,99"
 
-#: conf/settings.py:52
+#: conf/settings.py:53
 msgid "Russian"
 msgstr "Ruščina"
 
-#: conf/settings.py:53
+#: conf/settings.py:54
 msgid "English"
 msgstr "Angleščina"
 
-#: conf/settings.py:54
+#: conf/settings.py:55
 msgid "Slovenian"
 msgstr "Slovenščina"
