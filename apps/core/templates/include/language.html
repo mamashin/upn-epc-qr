@@ -2,7 +2,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
-<button class="circle large transparent active" data-ui="#global-menu"><i>language</i>
+<button class="circle large transparent active m l" data-ui="#global-menu"><i>language</i>
     <menu class="no-wrap" id="global-menu" data-ui="#global-menu">
         {% for language in languages %}
             <a class="row {% if language.code == LANGUAGE_CODE %}underline{% endif %}"

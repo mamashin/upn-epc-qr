@@ -1,6 +1,11 @@
 {% load i18n %}
+{#<nav id="left_nav" class="left s small-space">#}
+{#    <header></header>#}
+{#    <div class="overlay"></div>#}
+{#    <div class=""><a href="/"><i>home</i></a></div>#}
+{#</nav>#}
 <nav id="navigation" hx-push-url="true" class="top">
-      <div class="m l"><a href="/"><i>home</i></a></div>
+      <div class="m l s"><a href="/"><i>home</i></a></div>
     <div class="max"></div>
   {# mode: manual, scan & qr  #}
       <button {% if mode != 'scan' %}class="small-round" {% else %}disabled{% endif %} hx-get="{% url 'qr_scan' %}"
@@ -14,6 +19,5 @@
           <i>edit_note</i><span class="m l">Edit</span></button>
   {% endif %}
 {% include "include/language.html" %}
-
 </nav>
 {% block menu %} {% endblock menu %}
