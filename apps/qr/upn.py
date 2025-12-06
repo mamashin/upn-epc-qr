@@ -52,7 +52,12 @@ class UpnBaseModel(ListBaseModel):
     @field_validator('znesek')
     @classmethod
     def parse_znesek(cls, v):
-        return int(v)/100
+        amount = int(v)/100
+        # If amount is 0 or empty, set minimum valid EPC amount (0.01 EUR)
+        # This is common for charity payments where user chooses the amount
+        if amount == 0 or not v:
+            return 0.01
+        return amount
 
     @field_validator('rok_placila')
     @classmethod

@@ -24,7 +24,11 @@ def get_text_dimensions(text_string, font):
 def generate_qr_code(data: UpnModel) -> Result:
     out = io.BytesIO()
     try:
-        qr = helpers.make_epc_qr(name=data.ime_prejemnika, iban=data.iban_prejemnika, amount=data.znesek,
+        # Ensure amount is at least 0.01 EUR (EPC standard minimum)
+        # This handles charity payments where amount might be 0
+        amount = data.znesek if data.znesek >= 0.01 else 0.01
+
+        qr = helpers.make_epc_qr(name=data.ime_prejemnika, iban=data.iban_prejemnika, amount=amount,
                                  text=data.referenca, encoding='UTF-8')
         qr.save(out, scale=15, border=5, kind='png', finder_dark='#209cdf')
         out.seek(0)

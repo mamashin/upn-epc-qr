@@ -41,7 +41,11 @@ def create_upn_model(form_data: str) -> Result:
         try:
             # Dump BaseModel to dict, correct rok_placila to timezone aware, create md5 hash for unique model
             upn_base_model_dict = upn_base_model.model_dump(warnings=False)
-            upn_base_model_dict['rok_placila'] = timezone.make_aware(upn_base_model_dict['rok_placila'])
+            if upn_base_model_dict['rok_placila']:
+                upn_base_model_dict['rok_placila'] = timezone.make_aware(upn_base_model_dict['rok_placila'])
+            else:
+                # If rok_placila is empty, set current date to avoid Django validation error
+                upn_base_model_dict['rok_placila'] = timezone.now()
             # logger.warning(json.dumps(upn_base_model.model_dump_json(warnings=False),
             #                                                         sort_keys=True).encode('utf-8'))
             # logger.warning(upn_base_model.model_dump())
