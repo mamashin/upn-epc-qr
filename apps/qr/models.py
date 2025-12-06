@@ -92,7 +92,6 @@ class UpnModel(TimestampedModel):
         return cls(**kwargs)
 
     def save(self, *args, **kwargs):
-        logger.info('save!')
         created = self._state.adding
         if UpnModel.objects.filter(md5=self.md5_sum).first():
             return

@@ -31,7 +31,8 @@ class PostQr(TemplateView):
             if is_ok(create_result):
                 self.extra_context = {"img": create_result.value["img"],
                                       "model": create_result.value["model"],
-                                      "mode": "qr"}
+                                      "mode": "qr",
+                                      "amount_was_auto_set": create_result.value.get("amount_was_auto_set", False)}
                 return push_url(render(request, "qr_ok.html", self.get_context_data()),
                                 f"/qr/{create_result.value['model'].rnd}/")
             else:

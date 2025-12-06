@@ -32,6 +32,11 @@ def create_upn_model(form_data: str) -> Result:
 
         if len(qr_form_data_list) != 20:  # UPN has 20 fields !
             return Err('Wrong list length')
+
+        # Check if original amount was zero (field #8 in UPN format)
+        original_amount_cents = int(qr_form_data_list[8]) if qr_form_data_list[8] else 0
+        amount_was_zero = original_amount_cents == 0
+
         try:
             # Convert list to Upn pydantic model
             upn_base_model = UpnBaseModel.from_list(qr_form_data_list)
@@ -44,8 +49,12 @@ def create_upn_model(form_data: str) -> Result:
             if upn_base_model_dict['rok_placila']:
                 upn_base_model_dict['rok_placila'] = timezone.make_aware(upn_base_model_dict['rok_placila'])
             else:
-                # If rok_placila is empty, set current date to avoid Django validation error
-                upn_base_model_dict['rok_placila'] = timezone.now()
+                # If rok_placila is empty, set next day at 00:00:00 to avoid duplicates
+                # All invoices scanned on the same day without deadline will have same rok_placila
+                from datetime import datetime, timedelta
+                tomorrow = datetime.now() + timedelta(days=1)
+                tomorrow_midnight = tomorrow.replace(hour=0, minute=0, second=0, microsecond=0)
+                upn_base_model_dict['rok_placila'] = timezone.make_aware(tomorrow_midnight)
             # logger.warning(json.dumps(upn_base_model.model_dump_json(warnings=False),
             #                                                         sort_keys=True).encode('utf-8'))
             # logger.warning(upn_base_model.model_dump())
@@ -68,4 +77,8 @@ def create_upn_model(form_data: str) -> Result:
         if is_err(qr_img):
             return Err(f'Error generate QR code - {qr_img.err}')
 
-        return Ok({'model': upn_model, 'img': qr_img.value})
+        return Ok({
+            'model': upn_model,
+            'img': qr_img.value,
+            'amount_was_auto_set': amount_was_zero
+        })

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 18:24+0100\n"
+"POT-Creation-Date: 2025-12-06 19:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,7 @@ msgstr ""
 msgid "Error filling out the form"
 msgstr "Napaka pri izpolnjevanju obrazca"
 
+#: apps/core/templates/include/main_description.html:4
 msgid ""
 "\n"
 "        <p>This service allows you to scan <strong>UPN QR</strong> codes "
@@ -52,7 +53,8 @@ msgstr "uredite skenirano kodo"
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
 "it or save it for later use."
-msgstr "Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
+msgstr ""
+"Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
 "deliti ali pa jo shranite za kasnejšo uporabo."
 
 #: apps/core/templates/only_form.html:5
@@ -86,6 +88,15 @@ msgstr "QR koda ni bila najdena"
 #: apps/core/templates/qr_show.html:2
 msgid "EPC QR code for payment via Revolut / Bunq / N26 / etc.."
 msgstr "EPC QR koda za plačilo prek Revolut / Bunq / N26 / etc.."
+
+#: apps/core/templates/qr_show.html:9
+msgid ""
+"The amount was not specified in the original invoice and has been "
+"automatically set to 0.01 EUR. You can change it using the edit form or in "
+"your banking app."
+msgstr ""
+"Znesek ni bil naveden v izvirnem računu in je bil samodejno nastavljen na "
+"0,01 EUR. Lahko ga spremenite prek obrazca za urejanje ali v bančni aplikaciji."
 
 #: apps/qr/forms.py:24
 msgid "Recipient’s name"

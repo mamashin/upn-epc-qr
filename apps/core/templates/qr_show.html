@@ -1,5 +1,17 @@
 {% load i18n %}
 <p class="large-text">{% trans "EPC QR code for payment via Revolut / Bunq / N26 / etc.." %}</p>
+{% if amount_was_auto_set %}
+<div class="grid">
+    <div class="s12 m6 l6">
+        <article class="border tertiary">
+            <i>warning</i>
+            <div>
+                <p>{% trans "The amount was not specified in the original invoice and has been automatically set to 0.01 EUR. You can change it using the edit form or in your banking app." %}</p>
+            </div>
+        </article>
+    </div>
+</div>
+{% endif %}
 <div class="grid" id="scan_result">
     <div class="s12 m6 l6 center-align">
         <hr/>
