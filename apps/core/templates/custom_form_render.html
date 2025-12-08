@@ -12,7 +12,7 @@
                     <label class="active">{{ field.label_tag }}</label>
                     {#                    <span class="helper">Helper text</span>#}
                     {% for field_error in  field.errors %}
-                        <span class="error">{{ field_error }}</span>
+                        <output class="invalid">{{ field_error }}</output>
                     {% endfor %}
                 </div>
             </div>

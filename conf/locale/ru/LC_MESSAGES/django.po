@@ -48,6 +48,10 @@ msgstr "ввести данные о платеже вручную"
 msgid "edit the scanned code"
 msgstr "редактировать отсканированный код"
 
+#: apps/core/templates/include/main_description.html:11
+msgid "download original invoice as PDF"
+msgstr "скачать оригинальный счет в PDF"
+
 #: apps/core/templates/include/main_description.html:12
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
@@ -145,4 +149,44 @@ msgstr "Английский"
 #: conf/settings.py:55
 msgid "Slovenian"
 msgstr "Словенский"
+
+#: apps/core/templates/qr_show.html:27
+msgid "Download Invoice"
+msgstr "Скачать счет"
+
+#: apps/core/templates/qr_show.html:41
+msgid "Invoice Download Settings"
+msgstr "Настройки скачивания счета"
+
+#: apps/core/templates/qr_show.html:45
+msgid "Top"
+msgstr "Сверху"
+
+#: apps/core/templates/qr_show.html:46
+msgid "Bottom"
+msgstr "Снизу"
+
+#: apps/core/templates/qr_show.html:48
+msgid "Position"
+msgstr "Позиция"
+
+#: apps/core/templates/qr_show.html:49
+msgid "Where to place the payment slip on the page"
+msgstr "Где разместить платежку на странице"
+
+#: apps/core/templates/qr_show.html:54
+msgid "Print background template"
+msgstr "Печатать подложку"
+
+#: apps/core/templates/qr_show.html:57
+msgid "Disable if you have pre-printed forms"
+msgstr "Отключите, если у вас есть предварительно напечатанные формы"
+
+#: apps/core/templates/qr_show.html:60
+msgid "Cancel"
+msgstr "Отмена"
+
+#: apps/core/templates/qr_show.html:63
+msgid "Download"
+msgstr "Скачать"
 

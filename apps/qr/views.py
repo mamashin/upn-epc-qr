@@ -15,11 +15,13 @@ from result import Result, is_ok, is_err
 from django import forms
 from django.shortcuts import render
 from django_htmx.http import retarget, push_url
+from urllib.parse import quote
 
 from .epc import generate_qr_code
 from .forms import QrForm, QrManualForm
 from .services import create_upn_model
 from .models import UpnModel
+from .pdf_generator import UpnPdfGenerator
 
 
 class PostQr(TemplateView):
@@ -99,3 +101,58 @@ class GetSaveQr(TemplateView):
                           {"mode": mode, "show_form": show_form, "model": exist_model, "img": img,
                            "direct_get": True})
         return response
+
+
+class DownloadPdfView(TemplateView):
+    """View for downloading UPN QR document as PDF"""
+
+    def get(self, request, *args, **kwargs):
+        rnd_id = kwargs.get("rnd_id")
+        upn_model = UpnModel.objects.filter(rnd=rnd_id).first()
+
+        if not upn_model:
+            logger.error(f'PDF download: Model not found for rnd={rnd_id}')
+            return HttpResponse("QR code not found", status=404)
+
+        # Only allow PDF download for scanned QR codes (qr or qr_edit), not for manually created forms
+        if upn_model.data_type == 'form':
+            logger.warning(f'PDF download attempted for manually created form: rnd={rnd_id}')
+            return HttpResponse("PDF download is only available for scanned invoices", status=403)
+
+        try:
+            # Get PDF settings from query parameters
+            position = request.GET.get('position', 'top')  # 'top' or 'bottom'
+            draw_template = request.GET.get('template', '1') == '1'  # '1' = True, '0' = False
+
+            # Validate position parameter
+            if position not in ['top', 'bottom']:
+                position = 'top'
+
+            logger.info(f'PDF download settings: position={position}, draw_template={draw_template}')
+
+            # Generate PDF with custom settings
+            generator = UpnPdfGenerator(position=position, draw_template=draw_template)
+            pdf_bytes = generator.generate(upn_model)
+
+            # Generate filename
+            filename = UpnPdfGenerator.generate_filename(upn_model)
+
+            # Create response with proper Content-Disposition header for non-ASCII filenames
+            # Use RFC 2231/5987 encoding: filename (ASCII fallback) + filename* (UTF-8)
+            response = HttpResponse(pdf_bytes, content_type='application/pdf')
+
+            # ASCII fallback - remove non-ASCII characters
+            ascii_filename = filename.encode('ascii', 'ignore').decode('ascii')
+
+            # UTF-8 encoded filename
+            encoded_filename = quote(filename)
+
+            # Set both filename (ASCII fallback) and filename* (UTF-8)
+            response['Content-Disposition'] = f'attachment; filename="{ascii_filename}"; filename*=UTF-8\'\'{encoded_filename}'
+
+            logger.info(f'PDF generated successfully for rnd={rnd_id}, filename={filename}')
+            return response
+
+        except Exception as e:
+            logger.error(f'Error generating PDF for rnd={rnd_id}: {str(e)}')
+            return HttpResponse(f"Error generating PDF: {str(e)}", status=500)

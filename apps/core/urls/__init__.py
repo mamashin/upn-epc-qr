@@ -10,7 +10,7 @@ from django.urls import path, reverse
 from django.views.generic import TemplateView
 
 from apps.core.views import MainPage, favicon
-from apps.qr.views import GetSaveQr
+from apps.qr.views import GetSaveQr, DownloadPdfView
 
 
 class StaticViewSitemap(sitemaps.Sitemap):
@@ -37,6 +37,7 @@ urlpatterns = [
     path("qr/manual/", MainPage.as_view(), name='qr_manual', kwargs={'mode': 'manual'}),
     path("qr/scan/", MainPage.as_view(), name='qr_scan', kwargs={'mode': 'scan'}),
     path("qr/<str:rnd_id>/edit/", MainPage.as_view(), name='qr_edit', kwargs={'mode': 'edit'}),
+    path("qr/<str:rnd_id>/pdf/", DownloadPdfView.as_view(), name='qr_pdf_download'),
     path("qr/<str:rnd_id>/", GetSaveQr.as_view(), name='qr_open', kwargs={'mode': 'open'}),
 
     path('lang/', MainPage.as_view(), name='main_page_lang', kwargs={'mode': 'lang'}),

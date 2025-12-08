@@ -49,6 +49,10 @@ msgstr "ročno vnesite podatke za plačilo"
 msgid "edit the scanned code"
 msgstr "uredite skenirano kodo"
 
+#: apps/core/templates/include/main_description.html:11
+msgid "download original invoice as PDF"
+msgstr "prenesite izvirni račun kot PDF"
+
 #: apps/core/templates/include/main_description.html:12
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
@@ -145,3 +149,43 @@ msgstr "Angleščina"
 #: conf/settings.py:55
 msgid "Slovenian"
 msgstr "Slovenščina"
+
+#: apps/core/templates/qr_show.html:27
+msgid "Download Invoice"
+msgstr "Prenesite račun"
+
+#: apps/core/templates/qr_show.html:41
+msgid "Invoice Download Settings"
+msgstr "Nastavitve prenosa računa"
+
+#: apps/core/templates/qr_show.html:45
+msgid "Top"
+msgstr "Zgoraj"
+
+#: apps/core/templates/qr_show.html:46
+msgid "Bottom"
+msgstr "Spodaj"
+
+#: apps/core/templates/qr_show.html:48
+msgid "Position"
+msgstr "Položaj"
+
+#: apps/core/templates/qr_show.html:49
+msgid "Where to place the payment slip on the page"
+msgstr "Kje želite postaviti plačilni nalog na strani"
+
+#: apps/core/templates/qr_show.html:54
+msgid "Print background template"
+msgstr "Natisni predlogo ozadja"
+
+#: apps/core/templates/qr_show.html:57
+msgid "Disable if you have pre-printed forms"
+msgstr "Onemogočite, če imate že natisnjene obrazce"
+
+#: apps/core/templates/qr_show.html:60
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: apps/core/templates/qr_show.html:63
+msgid "Download"
+msgstr "Prenesi"

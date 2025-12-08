@@ -20,6 +20,13 @@
         <div class="space"></div>
         <hr/>
         {% include 'qr_link.html' %}
+        <div class="space"></div>
+        {% if model.data_type == 'qr' or model.data_type == 'qr_edit' %}
+        <button class="border round" onclick="ui('#pdf-settings-modal')">
+            <i>download</i>
+            <span>{% trans "Download Invoice" %}</span>
+        </button>
+        {% endif %}
     </div>
     <div id="manual_edit" class="s12 m6 l6">
         {% if direct_get and form %}
@@ -27,3 +34,48 @@
         {% endif %}
     </div>
 </div>
+
+<!-- PDF Download Settings Modal -->
+{% if model.data_type == 'qr' or model.data_type == 'qr_edit' %}
+<dialog id="pdf-settings-modal" class="modal">
+    <h5>{% trans "Invoice Download Settings" %}</h5>
+    <br>
+    <div>
+        <div class="field label border">
+            <select id="pdf-position">
+                <option value="top" selected>{% trans "Top" %}</option>
+                <option value="bottom">{% trans "Bottom" %}</option>
+            </select>
+            <label>{% trans "Position" %}</label>
+            <span class="helper">{% trans "Where to place the payment slip on the page" %}</span>
+        </div>
+        <br>Jn
+
+        <label class="checkbox">
+            <input type="checkbox" id="pdf-template" checked>
+            <span>{% trans "Print background template" %}</span>
+        </label>
+    </div>
+    <nav class="right-align">
+        <button class="border" onclick="ui('#pdf-settings-modal')">{% trans "Cancel" %}</button>
+        <button onclick="downloadPdf()">
+            <i>download</i>
+            <span>{% trans "Download" %}</span>
+        </button>
+    </nav>
+</dialog>
+
+<script>
+function downloadPdf() {
+    const position = document.getElementById('pdf-position').value;
+    const template = document.getElementById('pdf-template').checked ? '1' : '0';
+    const url = "{% url 'qr_pdf_download' model.rnd %}?position=" + position + "&template=" + template;
+
+    // Close modal
+    ui('#pdf-settings-modal');
+
+    // Download file
+    window.location.href = url;
+}
+</script>
+{% endif %}

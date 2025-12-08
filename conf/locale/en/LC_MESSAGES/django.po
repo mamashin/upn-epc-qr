@@ -43,6 +43,10 @@ msgstr ""
 msgid "edit the scanned code"
 msgstr ""
 
+#: apps/core/templates/include/main_description.html:11
+msgid "download original invoice as PDF"
+msgstr ""
+
 #: apps/core/templates/include/main_description.html:12
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
@@ -137,4 +141,44 @@ msgstr ""
 
 #: conf/settings.py:55
 msgid "Slovenian"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:27
+msgid "Download Invoice"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:41
+msgid "Invoice Download Settings"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:45
+msgid "Top"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:46
+msgid "Bottom"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:48
+msgid "Position"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:49
+msgid "Where to place the payment slip on the page"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:54
+msgid "Print background template"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:57
+msgid "Disable if you have pre-printed forms"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:60
+msgid "Cancel"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:63
+msgid "Download"
 msgstr ""

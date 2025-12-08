@@ -65,7 +65,9 @@ class UpnBaseModel(ListBaseModel):
         if not v:
             return ''
         try:
-            ts = datetime.strptime(v, '%d.%m.%Y')
+            # Parse date and set time to noon (12:00) to avoid timezone conversion issues
+            # When converted to UTC, it won't shift to previous day
+            ts = datetime.strptime(v, '%d.%m.%Y').replace(hour=12, minute=0, second=0)
         except ValueError:
             raise ValueError('Invalid datum_placila')
         return ts

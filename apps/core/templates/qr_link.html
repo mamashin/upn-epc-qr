@@ -5,7 +5,7 @@
         <input value="{{ request.scheme }}://{{ request.get_host }}/qr/{{ model.rnd }}/" readonly/>
         <label class="active">{% trans "Link for sharing QR" %}</label>
     </div>
-    <button class="right-round small-round no-padding" onclick="copyToClipboard('/qr/{{ model.rnd }}/');ui('#copy_link_snack',1000)">
+    <button class="right-round small-round" onclick="copyToClipboard('/qr/{{ model.rnd }}/');ui('#copy_link_snack',1000)">
         <i>content_copy</i>
         <div class="tooltip left">{% trans "copy to clipboard" %}</div>
     </button>

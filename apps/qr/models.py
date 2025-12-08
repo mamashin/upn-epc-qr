@@ -93,7 +93,13 @@ class UpnModel(TimestampedModel):
 
     def save(self, *args, **kwargs):
         created = self._state.adding
-        if UpnModel.objects.filter(md5=self.md5_sum).first():
+
+        # Check for duplicate MD5, but exclude current record when updating
+        duplicate_check = UpnModel.objects.filter(md5=self.md5_sum)
+        if not created and self.pk:
+            duplicate_check = duplicate_check.exclude(pk=self.pk)
+
+        if duplicate_check.first():
             return
 
         self.md5 = self.md5_sum
