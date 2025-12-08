@@ -2,13 +2,14 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
-<button class="circle large transparent active m l" data-ui="#global-menu"><i>language</i>
-    <menu class="no-wrap" id="global-menu" data-ui="#global-menu">
+<button class="circle large transparent active m l" data-ui="#global-menu">
+    <i>language</i>
+    <menu class="no-wrap right" id="global-menu" data-ui="#global-menu" style="min-width: 60px;">
         {% for language in languages %}
-            <a class="row {% if language.code == LANGUAGE_CODE %}underline{% endif %}"
-               {# TODO: Brrr #}
-                hx-get="/lang/?lang={{ language.code }}&prev_path={% if mode == 'scan' or not mode %}{{ request.path }}{% elif mode == 'qr' %}/qr/{{ model.rnd }}/{% else %}/qr/manual/{% endif %}" hx-swap="none"
-            >
+            <a class="row round {% if language.code == LANGUAGE_CODE %}primary bold{% endif %}"
+               style="padding: 8px 12px; justify-content: center; font-size: 1rem;"
+               hx-get="/lang/?lang={{ language.code }}&prev_path={% if mode == 'scan' or not mode %}{{ request.path }}{% elif mode == 'qr' %}/qr/{{ model.rnd }}/{% else %}/qr/manual/{% endif %}"
+               hx-swap="none">
                 {{ language.code|upper }}
             </a>
         {% endfor %}
