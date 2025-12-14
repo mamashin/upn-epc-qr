@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-06 19:21+0100\n"
+"POT-Creation-Date: 2025-12-15 00:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,28 +24,34 @@ msgstr ""
 #: apps/core/templates/include/main_description.html:4
 msgid ""
 "\n"
-"        <p>This service allows you to scan <strong>UPN QR</strong> codes "
-"(used in Slovenia) and obtain payment details\n"
-"            in <strong>EPC QR</strong> format compatible with Revolut, Bunq, "
-"N26 and other EU banks.</p>\n"
+"        <p>This service allows you to work with Slovenian <strong>UPN QR</"
+"strong> payment codes: convert them to <strong>EPC QR</strong> format "
+"(compatible with Revolut, Bunq, N26 and other EU banks), create new UPN "
+"invoices, and generate PDF copies.</p>\n"
 "        "
 msgstr ""
+"\n"
+"        <p>This service allows you to work with Slovenian <strong>UPN QR</"
+"strong> payment codes: convert them to <strong>EPC QR</strong> format "
+"(compatible with Revolut, Bunq, N26 and other EU banks), create new UPN "
+"invoices, and generate PDF copies.</p>\n"
+"        "
+
+#: apps/core/templates/include/main_description.html:7
+msgid "scan QR with a camera"
+msgstr "scan QR with a camera"
 
 #: apps/core/templates/include/main_description.html:8
-msgid "scan QR with a camera"
-msgstr ""
+msgid "create new UPN invoices or enter payment details"
+msgstr "create new UPN invoices or enter payment details"
 
 #: apps/core/templates/include/main_description.html:9
-msgid "manually enter payment details"
-msgstr ""
+msgid "edit the scanned code"
+msgstr "edit the scanned code"
 
 #: apps/core/templates/include/main_description.html:10
-msgid "edit the scanned code"
-msgstr ""
-
-#: apps/core/templates/include/main_description.html:11
-msgid "download original invoice as PDF"
-msgstr ""
+msgid "download invoice as PDF copy"
+msgstr "download invoice as PDF copy"
 
 #: apps/core/templates/include/main_description.html:12
 msgid ""
@@ -53,11 +59,35 @@ msgid ""
 "it or save it for later use."
 msgstr ""
 
-#: apps/core/templates/only_form.html:5
-msgid "Enter the data to create a new invoice"
-msgstr ""
+#: apps/core/templates/only_form.html:11
+msgid "EPC Form"
+msgstr "EPC Form"
 
-#: apps/core/templates/only_form.html:14
+#: apps/core/templates/only_form.html:18
+msgid "Full UPN Form"
+msgstr "Full UPN Form"
+
+#: apps/core/templates/only_form.html:26
+msgid "Create complete UPN invoice with all fields"
+msgstr "Create complete UPN invoice with all fields"
+
+#: apps/core/templates/only_form.html:28
+msgid "Enter the data to create a new invoice"
+msgstr "Enter the data to create a new invoice"
+
+#: apps/core/templates/only_form.html:37
+msgid "Recipient Information"
+msgstr "Recipient Information"
+
+#: apps/core/templates/only_form.html:61
+msgid "Payment Details"
+msgstr "Payment Details"
+
+#: apps/core/templates/only_form.html:85
+msgid "Payer Information (Optional)"
+msgstr "Payer Information (Optional)"
+
+#: apps/core/templates/only_form.html:125
 msgid "Create QR"
 msgstr ""
 
@@ -95,20 +125,56 @@ msgstr ""
 "automatically set to 0.01 EUR. You can change it using the edit form or in "
 "your banking app."
 
-#: apps/qr/forms.py:24
-msgid "Recipient’s name"
+#: apps/core/templates/qr_show.html:27
+msgid "Download UPN Invoice"
+msgstr "Download UPN Invoice"
+
+#: apps/core/templates/qr_show.html:41
+msgid "Invoice Download Settings"
 msgstr ""
 
-#: apps/qr/forms.py:25
-msgid "Recipient’s IBAN"
+#: apps/core/templates/qr_show.html:46
+msgid "Top"
 msgstr ""
 
-#: apps/qr/forms.py:26
+#: apps/core/templates/qr_show.html:47
+msgid "Bottom"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:49
+msgid "Position"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:50
+msgid "Where to place the payment slip on the page"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:55
+msgid "Print background template"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:59
+msgid "Cancel"
+msgstr ""
+
+#: apps/core/templates/qr_show.html:62
+msgid "Download"
+msgstr ""
+
+#: apps/qr/forms.py:24 apps/qr/forms.py:75
+msgid "Recipient's name"
+msgstr ""
+
+#: apps/qr/forms.py:25 apps/qr/forms.py:76
+msgid "Recipient's IBAN"
+msgstr ""
+
+#: apps/qr/forms.py:26 apps/qr/forms.py:80
 msgid "Amount"
 msgstr ""
 
 #: apps/qr/forms.py:27
-msgid "Recipient’s reference"
+msgid "Recipient's reference"
 msgstr ""
 
 #: apps/qr/forms.py:31
@@ -122,6 +188,42 @@ msgstr ""
 #: apps/qr/forms.py:39
 msgid "SI08 1236-17-345679"
 msgstr ""
+
+#: apps/qr/forms.py:48
+msgid "Payment deadline"
+msgstr "Payment deadline"
+
+#: apps/qr/forms.py:77
+msgid "Recipient's street"
+msgstr "Recipient's street"
+
+#: apps/qr/forms.py:78
+msgid "Recipient's city"
+msgstr "Recipient's city"
+
+#: apps/qr/forms.py:81
+msgid "Reference"
+msgstr "Reference"
+
+#: apps/qr/forms.py:82
+msgid "Purpose code"
+msgstr "Purpose code"
+
+#: apps/qr/forms.py:83
+msgid "Payment purpose"
+msgstr "Payment purpose"
+
+#: apps/qr/forms.py:85
+msgid "Payer's name"
+msgstr "Payer's name"
+
+#: apps/qr/forms.py:86
+msgid "Payer's street"
+msgstr "Payer's street"
+
+#: apps/qr/forms.py:87
+msgid "Payer's city"
+msgstr "Payer's city"
 
 #: apps/qr/models.py:35
 msgid "IBAN must start with 2 letters followed by digits"
@@ -141,44 +243,4 @@ msgstr ""
 
 #: conf/settings.py:55
 msgid "Slovenian"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:27
-msgid "Download Invoice"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:41
-msgid "Invoice Download Settings"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:45
-msgid "Top"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:46
-msgid "Bottom"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:48
-msgid "Position"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:49
-msgid "Where to place the payment slip on the page"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:54
-msgid "Print background template"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:57
-msgid "Disable if you have pre-printed forms"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:60
-msgid "Cancel"
-msgstr ""
-
-#: apps/core/templates/qr_show.html:63
-msgid "Download"
 msgstr ""

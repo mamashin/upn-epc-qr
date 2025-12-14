@@ -1,16 +1,128 @@
 {% load i18n %}
 <div>
-    <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}main{% else %}scan_data{% endif %}" hx-swap="innerHTML">
     {% if mode == 'manual' %}
-        <span class="large-text secondary-text">{% trans "Enter the data to create a new invoice" %}</span>
+        <!-- Form Type Switcher - Only show for manual mode, not for editing -->
+        <div style="margin-top: 1.5rem; margin-bottom: 1rem; display: flex; gap: 0.5rem;">
+            <button {% if form_type != 'full' %}disabled{% else %}class="round border"{% endif %}
+                    hx-get="{% url 'manual_form' %}?form_type=simple"
+                    hx-target="#scan_data"
+                    hx-swap="innerHTML">
+                <i>edit</i>
+                <span>{% trans "EPC Form" %}</span>
+            </button>
+            <button {% if form_type == 'full' %}disabled{% else %}class="round border"{% endif %}
+                    hx-get="{% url 'manual_form' %}?form_type=full"
+                    hx-target="#scan_data"
+                    hx-swap="innerHTML">
+                <i>description</i>
+                <span>{% trans "Full UPN Form" %}</span>
+            </button>
+        </div>
     {% endif %}
-        {% include "custom_form_render.html" %}
+
+    <form hx-post="{% url 'manual_form' %}" hx-target="#{% if mode == 'qr' %}main{% else %}scan_data{% endif %}" hx-swap="innerHTML">
+        {% if mode == 'manual' %}
+            {% if form_type == 'full' %}
+                <span class="large-text secondary-text">{% trans "Create complete UPN invoice with all fields" %}</span>
+            {% else %}
+                <span class="large-text secondary-text">{% trans "Enter the data to create a new invoice" %}</span>
+            {% endif %}
+        {% endif %}
+
+        {% if form_type == 'full' %}
+            <!-- Full form with grouped fields -->
+
+            <!-- Recipient Section -->
+            <fieldset class="border" style="margin: 1rem 0; padding: 1rem;">
+                <legend class="medium-text">{% trans "Recipient Information" %}</legend>
+                {% for field in form %}
+                    {% if field.name in 'ime_prejemnika,iban_prejemnika,ulica_prejemnika,kraj_prejemnika' %}
+                        {% if not field.is_hidden %}
+                            <div class="grid">
+                                <div class="s12 m12 l10">
+                                    <div class="field label medium border {% if field.errors %}invalid{% endif %}">
+                                        {{ field }}
+                                        <label class="active">
+                                            {{ field.label }}{% if field.field.required %}<span style="color: red;"> *</span>{% endif %}
+                                        </label>
+                                        {% for field_error in field.errors %}
+                                            <output class="invalid">{{ field_error }}</output>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+
+            <!-- Payment Section -->
+            <fieldset class="border" style="margin: 1rem 0; padding: 1rem;">
+                <legend class="medium-text">{% trans "Payment Details" %}</legend>
+                {% for field in form %}
+                    {% if field.name in 'znesek,referenca,koda_namena,namen_placila,rok_placila' %}
+                        {% if not field.is_hidden %}
+                            <div class="grid">
+                                <div class="s12 m12 l10">
+                                    <div class="field label medium border {% if field.errors %}invalid{% endif %}">
+                                        {{ field }}
+                                        <label class="active">
+                                            {{ field.label }}{% if field.field.required %}<span style="color: red;"> *</span>{% endif %}
+                                        </label>
+                                        {% for field_error in field.errors %}
+                                            <output class="invalid">{{ field_error }}</output>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+
+            <!-- Payer Section (Optional) -->
+            <fieldset class="border" style="margin: 1rem 0; padding: 1rem;">
+                <legend class="medium-text">{% trans "Payer Information (Optional)" %}</legend>
+                {% for field in form %}
+                    {% if field.name in 'ime_placnika,ulica_placnika,kraj_placnika' %}
+                        {% if not field.is_hidden %}
+                            <div class="grid">
+                                <div class="s12 m12 l10">
+                                    <div class="field label medium border {% if field.errors %}invalid{% endif %}">
+                                        {{ field }}
+                                        <label class="active">{{ field.label }}</label>
+                                        {% for field_error in field.errors %}
+                                            <output class="invalid">{{ field_error }}</output>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+
+            <!-- Hidden fields -->
+            {% for field in form %}
+                {% if field.is_hidden %}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+            <input type="hidden" name="form_type" value="full">
+        {% else %}
+            <!-- Simple form -->
+            {% include "custom_form_render.html" %}
+            <input type="hidden" name="form_type" value="simple">
+        {% endif %}
+
         {% if mode == 'qr' %}
             <input type="hidden" name="qr_edit_form" value="{{ model.rnd }}">
         {% endif %}
-    <div class="small-space"></div>
+
+        <div class="small-space"></div>
         <button type="submit" class="small-round no-margin">
             <i>qr_code</i>
-            <span>{% trans "Create QR" %}</span></button>
+            <span>{% trans "Create QR" %}</span>
+        </button>
     </form>
 </div>

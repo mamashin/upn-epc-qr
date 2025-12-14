@@ -21,10 +21,10 @@
         <hr/>
         {% include 'qr_link.html' %}
         <div class="space"></div>
-        {% if model.data_type == 'qr' or model.data_type == 'qr_edit' %}
+        {% if model.data_type == 'qr' or model.data_type == 'qr_edit' or model.data_type == 'form_full' %}
         <button class="border round" onclick="ui('#pdf-settings-modal')">
-            <i>download</i>
-            <span>{% trans "Download Invoice" %}</span>
+            <i>picture_as_pdf</i>
+            <span>{% trans "Download UPN Invoice" %}</span>
         </button>
         {% endif %}
     </div>
@@ -36,7 +36,7 @@
 </div>
 
 <!-- PDF Download Settings Modal -->
-{% if model.data_type == 'qr' or model.data_type == 'qr_edit' %}
+{% if model.data_type == 'qr' or model.data_type == 'qr_edit' or model.data_type == 'form_full' %}
 <dialog id="pdf-settings-modal" class="modal">
     <h5>{% trans "Invoice Download Settings" %}</h5>
     <br>

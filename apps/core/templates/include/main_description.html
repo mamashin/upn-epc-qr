@@ -2,13 +2,12 @@
 {% load i18n %}
     <div class="large-text">
         {% blocktranslate %}
-        <p>This service allows you to scan <strong>UPN QR</strong> codes (used in Slovenia) and obtain payment details
-            in <strong>EPC QR</strong> format compatible with Revolut, Bunq, N26 and other EU banks.</p>
+        <p>This service allows you to work with Slovenian <strong>UPN QR</strong> payment codes: convert them to <strong>EPC QR</strong> format (compatible with Revolut, Bunq, N26 and other EU banks), create new UPN invoices, and generate PDF copies.</p>
         {% endblocktranslate %}
         <p><button class="small-round" disabled><i>qr_code_scanner</i><span class="m l">Scan</span></button> - {% trans "scan QR with a camera" %}</p>
-        <p><button class="small-round" disabled><i>format_list_bulleted</i><span class="m l">Enter</span></button> - {% trans "manually enter payment details" %}</p>
+        <p><button class="small-round" disabled><i>format_list_bulleted</i><span class="m l">Enter</span></button> - {% trans "create new UPN invoices or enter payment details" %}</p>
         <p><button class="small-round" disabled><i>edit_note</i><span class="m l">Edit</span></button> - {% trans "edit the scanned code" %}</p>
-        <p><button class="small-round" disabled><i>download</i><span class="m l">Download</span></button> - {% trans "download original invoice as PDF" %}</p>
+        <p><button class="small-round" disabled><i>picture_as_pdf</i><span class="m l">Download</span></button> - {% trans "download invoice as PDF copy" %}</p>
         <p>
             {% trans "After scanning the QR code, you can choose to either copy the link to share it or save it for later use." %}
         </p>

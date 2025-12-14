@@ -63,7 +63,7 @@ class UpnModel(TimestampedModel):
 
     md5 = models.CharField(max_length=32, blank=False, null=False, unique=True)
     rnd = models.CharField(max_length=6, blank=False, null=False, unique=True, default=rnd)
-    data_type = models.CharField(choices=[('qr', 'UPN QR'), ('qr_edit', 'UPN edit'), ('form', 'Form')],
+    data_type = models.CharField(choices=[('qr', 'UPN QR'), ('qr_edit', 'UPN edit'), ('form', 'Form'), ('form_full', 'Form Full')],
                                  default='qr', max_length=10, verbose_name='')
 
     class Meta:
@@ -76,6 +76,59 @@ class UpnModel(TimestampedModel):
     @property
     def md5_sum(self):
         return md5_hash(self)
+
+    def calculate_kontrolna_vsota(self) -> str:
+        """
+        Calculate control sum (field 20) according to UPN QR standard.
+        Control sum = sum of lengths of fields 1-19 including '\n' after each field.
+
+        Returns:
+            str: 3-digit string with leading zeros (e.g., "252")
+        """
+        # Helper function to get field value or empty string
+        def get_field_value(value) -> str:
+            if value is None:
+                return ""
+            if isinstance(value, float):
+                # Convert amount to cents (e.g., 100.50 -> "00000010050")
+                return f"{int(value * 100):011d}"
+            if isinstance(value, str):
+                return value
+            return str(value)
+
+        # Format date field (DD.MM.YYYY or empty)
+        rok_placila_str = ""
+        if self.rok_placila:
+            rok_placila_str = self.rok_placila.strftime("%d.%m.%Y")
+
+        # Build array of 19 fields according to UPN QR standard
+        fields = [
+            "UPNQR",                              # 1. Leading style
+            "",                                    # 2. Payer's IBAN (empty for form)
+            "",                                    # 3. Deposit (empty)
+            "",                                    # 4. Withdrawal (empty)
+            "",                                    # 5. Payer's reference (empty)
+            get_field_value(self.ime_placnika),   # 6. Payer's name
+            get_field_value(self.ulica_placnika), # 7. Payer's street
+            get_field_value(self.kraj_placnika),  # 8. Payer's city
+            get_field_value(self.znesek),         # 9. Amount (in cents)
+            "",                                    # 10. Payment date (empty)
+            "",                                    # 11. Urgent (empty)
+            get_field_value(self.koda_namena),    # 12. Purpose code
+            get_field_value(self.namen_placila),  # 13. Purpose of payment
+            rok_placila_str,                       # 14. Payment deadline
+            get_field_value(self.iban_prejemnika).replace(" ", ""),  # 15. Recipient's IBAN
+            get_field_value(self.referenca),      # 16. Recipient's reference
+            get_field_value(self.ime_prejemnika), # 17. Recipient's name
+            get_field_value(self.ulica_prejemnika), # 18. Recipient's street
+            get_field_value(self.kraj_prejemnika),  # 19. Recipient's city
+        ]
+
+        # Calculate total length including '\n' after each field
+        total_length = sum(len(field) + 1 for field in fields)  # +1 for '\n'
+
+        # Return as 3-digit string with leading zeros
+        return f"{total_length:03d}"
 
     @classmethod
     def create(cls, **kwargs):
@@ -93,6 +146,11 @@ class UpnModel(TimestampedModel):
 
     def save(self, *args, **kwargs):
         created = self._state.adding
+
+        # Auto-calculate kontrolna_vsota for form_full type
+        if self.data_type == 'form_full':
+            self.kontrolna_vsota = self.calculate_kontrolna_vsota()
+            logger.debug(f"Auto-calculated kontrolna_vsota: {self.kontrolna_vsota} for {self.data_type}")
 
         # Check for duplicate MD5, but exclude current record when updating
         duplicate_check = UpnModel.objects.filter(md5=self.md5_sum)

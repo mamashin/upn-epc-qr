@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-06 19:21+0100\n"
+"POT-Creation-Date: 2025-12-15 00:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,34 +24,32 @@ msgstr "Napaka pri izpolnjevanju obrazca"
 #: apps/core/templates/include/main_description.html:4
 msgid ""
 "\n"
-"        <p>This service allows you to scan <strong>UPN QR</strong> codes "
-"(used in Slovenia) and obtain payment details\n"
-"            in <strong>EPC QR</strong> format compatible with Revolut, Bunq, "
-"N26 and other EU banks.</p>\n"
+"        <p>This service allows you to work with Slovenian <strong>UPN QR</"
+"strong> payment codes: convert them to <strong>EPC QR</strong> format "
+"(compatible with Revolut, Bunq, N26 and other EU banks), create new UPN "
+"invoices, and generate PDF copies.</p>\n"
 "        "
 msgstr ""
 "\n"
-"<p>Ta storitev omogoča skeniranje <strong>UPN QR</strong> kod (ki se "
-"uporabljajo v Sloveniji) in prejemanje podatkov o plačilu v formatu "
-"<strong>EPC QR</strong>, ki je združljiv z Revolut, Bunq, N26 indrugimi "
-"bančnimi institucijami v EU.\n"
+"<p>Ta storitev omogoča delo s slovenskimi plačilnimi <strong>UPN QR</strong> kodami: pretvarjanje v format "
+"<strong>EPC QR</strong> (združljiv z Revolut, Bunq, N26 in drugimi EU bankami), ustvarjanje novih UPN računov in generiranje PDF kopij.</p>\n"
 "        "
 
-#: apps/core/templates/include/main_description.html:8
+#: apps/core/templates/include/main_description.html:7
 msgid "scan QR with a camera"
 msgstr "kenirajte QR kodo s kamero"
 
-#: apps/core/templates/include/main_description.html:9
-msgid "manually enter payment details"
-msgstr "ročno vnesite podatke za plačilo"
+#: apps/core/templates/include/main_description.html:8
+msgid "create new UPN invoices or enter payment details"
+msgstr "ustvarite nov UPN račun ali vnesite podatke za plačilo"
 
-#: apps/core/templates/include/main_description.html:10
+#: apps/core/templates/include/main_description.html:9
 msgid "edit the scanned code"
 msgstr "uredite skenirano kodo"
 
-#: apps/core/templates/include/main_description.html:11
-msgid "download original invoice as PDF"
-msgstr "prenesite izvirni račun kot PDF"
+#: apps/core/templates/include/main_description.html:10
+msgid "download invoice as PDF copy"
+msgstr "prenesite PDF kopijo računa"
 
 #: apps/core/templates/include/main_description.html:12
 msgid ""
@@ -61,11 +59,35 @@ msgstr ""
 "Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
 "deliti ali pa jo shranite za kasnejšo uporabo."
 
-#: apps/core/templates/only_form.html:5
+#: apps/core/templates/only_form.html:11
+msgid "EPC Form"
+msgstr "EPC obrazec"
+
+#: apps/core/templates/only_form.html:18
+msgid "Full UPN Form"
+msgstr "Celotna UPN obrazec"
+
+#: apps/core/templates/only_form.html:26
+msgid "Create complete UPN invoice with all fields"
+msgstr "Ustvarite celoten UPN račun z vsemi polji"
+
+#: apps/core/templates/only_form.html:28
 msgid "Enter the data to create a new invoice"
 msgstr "Vnesite podatke za ustvarjanje novega računa"
 
-#: apps/core/templates/only_form.html:14
+#: apps/core/templates/only_form.html:37
+msgid "Recipient Information"
+msgstr "Podatki prejemnika"
+
+#: apps/core/templates/only_form.html:61
+msgid "Payment Details"
+msgstr "Podatki o plačilu"
+
+#: apps/core/templates/only_form.html:85
+msgid "Payer Information (Optional)"
+msgstr "Podatki plačnika (neobvezno)"
+
+#: apps/core/templates/only_form.html:125
 msgid "Create QR"
 msgstr "Ustvarite QR"
 
@@ -100,22 +122,65 @@ msgid ""
 "your banking app."
 msgstr ""
 "Znesek ni bil naveden v izvirnem računu in je bil samodejno nastavljen na "
-"0,01 EUR. Lahko ga spremenite prek obrazca za urejanje ali v bančni aplikaciji."
+"0,01 EUR. Lahko ga spremenite prek obrazca za urejanje ali v bančni "
+"aplikaciji."
 
-#: apps/qr/forms.py:24
-msgid "Recipient’s name"
+#: apps/core/templates/qr_show.html:27
+msgid "Download UPN Invoice"
+msgstr "Prenesite UPN račun"
+
+#: apps/core/templates/qr_show.html:41
+msgid "Invoice Download Settings"
+msgstr "Nastavitve prenosa računa"
+
+#: apps/core/templates/qr_show.html:46
+msgid "Top"
+msgstr "Zgoraj"
+
+#: apps/core/templates/qr_show.html:47
+msgid "Bottom"
+msgstr "Spodaj"
+
+#: apps/core/templates/qr_show.html:49
+msgid "Position"
+msgstr "Položaj"
+
+#: apps/core/templates/qr_show.html:50
+msgid "Where to place the payment slip on the page"
+msgstr "Kje želite postaviti plačilni nalog na strani"
+
+#: apps/core/templates/qr_show.html:55
+msgid "Print background template"
+msgstr "Natisni predlogo ozadja"
+
+#: apps/core/templates/qr_show.html:59
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: apps/core/templates/qr_show.html:62
+msgid "Download"
+msgstr "Prenesi"
+
+#: apps/qr/forms.py:24 apps/qr/forms.py:75
+#, fuzzy
+#| msgid "Recipient’s name"
+msgid "Recipient's name"
 msgstr "Ime prejemnika"
 
-#: apps/qr/forms.py:25
-msgid "Recipient’s IBAN"
+#: apps/qr/forms.py:25 apps/qr/forms.py:76
+#, fuzzy
+#| msgid "Recipient’s IBAN"
+msgid "Recipient's IBAN"
 msgstr "IBAN prejemnika"
 
-#: apps/qr/forms.py:26
+#: apps/qr/forms.py:26 apps/qr/forms.py:80
 msgid "Amount"
 msgstr "Znesek"
 
 #: apps/qr/forms.py:27
-msgid "Recipient’s reference"
+#, fuzzy
+#| msgid "Recipient’s reference"
+msgid "Recipient's reference"
 msgstr "Referenca prejemnika"
 
 #: apps/qr/forms.py:31
@@ -129,6 +194,42 @@ msgstr ""
 #: apps/qr/forms.py:39
 msgid "SI08 1236-17-345679"
 msgstr ""
+
+#: apps/qr/forms.py:48
+msgid "Payment deadline"
+msgstr "Rok plačila"
+
+#: apps/qr/forms.py:77
+msgid "Recipient's street"
+msgstr "Ulica prejemnika"
+
+#: apps/qr/forms.py:78
+msgid "Recipient's city"
+msgstr "Kraj prejemnika"
+
+#: apps/qr/forms.py:81
+msgid "Reference"
+msgstr "Referenca"
+
+#: apps/qr/forms.py:82
+msgid "Purpose code"
+msgstr "Koda namena"
+
+#: apps/qr/forms.py:83
+msgid "Payment purpose"
+msgstr "Namen plačila"
+
+#: apps/qr/forms.py:85
+msgid "Payer's name"
+msgstr "Ime plačnika"
+
+#: apps/qr/forms.py:86
+msgid "Payer's street"
+msgstr "Ulica plačnika"
+
+#: apps/qr/forms.py:87
+msgid "Payer's city"
+msgstr "Kraj plačnika"
 
 #: apps/qr/models.py:35
 msgid "IBAN must start with 2 letters followed by digits"
@@ -149,43 +250,3 @@ msgstr "Angleščina"
 #: conf/settings.py:55
 msgid "Slovenian"
 msgstr "Slovenščina"
-
-#: apps/core/templates/qr_show.html:27
-msgid "Download Invoice"
-msgstr "Prenesite račun"
-
-#: apps/core/templates/qr_show.html:41
-msgid "Invoice Download Settings"
-msgstr "Nastavitve prenosa računa"
-
-#: apps/core/templates/qr_show.html:45
-msgid "Top"
-msgstr "Zgoraj"
-
-#: apps/core/templates/qr_show.html:46
-msgid "Bottom"
-msgstr "Spodaj"
-
-#: apps/core/templates/qr_show.html:48
-msgid "Position"
-msgstr "Položaj"
-
-#: apps/core/templates/qr_show.html:49
-msgid "Where to place the payment slip on the page"
-msgstr "Kje želite postaviti plačilni nalog na strani"
-
-#: apps/core/templates/qr_show.html:54
-msgid "Print background template"
-msgstr "Natisni predlogo ozadja"
-
-#: apps/core/templates/qr_show.html:57
-msgid "Disable if you have pre-printed forms"
-msgstr "Onemogočite, če imate že natisnjene obrazce"
-
-#: apps/core/templates/qr_show.html:60
-msgid "Cancel"
-msgstr "Prekliči"
-
-#: apps/core/templates/qr_show.html:63
-msgid "Download"
-msgstr "Prenesi"

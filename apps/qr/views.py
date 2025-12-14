@@ -18,7 +18,7 @@ from django_htmx.http import retarget, push_url
 from urllib.parse import quote
 
 from .epc import generate_qr_code
-from .forms import QrForm, QrManualForm
+from .forms import QrForm, QrManualForm, QrFullForm
 from .services import create_upn_model
 from .models import UpnModel
 from .pdf_generator import UpnPdfGenerator
@@ -48,9 +48,33 @@ class PostQr(TemplateView):
 class PostManualForm(TemplateView):
     template_name = "main.html"
 
+    def get(self, request, *args, **kwargs):
+        """Handle GET requests for form display and form type switching"""
+        if request.htmx:
+            # Get form type from query parameter (default: simple)
+            form_type = request.GET.get("form_type", "simple")
+            FormClass = QrFullForm if form_type == "full" else QrManualForm
+
+            # Create empty form
+            form = FormClass()
+
+            # Render only_form.html with the appropriate form
+            return render(request, "only_form.html", {
+                "mode": "manual",
+                "show_form": True,
+                "form": form,
+                "form_type": form_type
+            })
+
+        return render(request, self.template_name, self.get_context_data())
+
     def post(self, request, *args, **kwargs):
         if request.htmx:
-            form = QrManualForm(request.POST)
+            # Determine which form to use based on form_type parameter
+            form_type = request.POST.get("form_type", "simple")
+            FormClass = QrFullForm if form_type == "full" else QrManualForm
+
+            form = FormClass(request.POST)
             manual_qr_edit = request.POST.get("qr_edit_form", None)
             model = None
             if manual_qr_edit:
@@ -59,9 +83,17 @@ class PostManualForm(TemplateView):
 
             if form.is_valid():
                 if not model:
-                    model = form.save()
+                    model = form.save(commit=False)
+                    # Set correct data_type based on form_type
+                    if form_type == "full":
+                        model.data_type = "form_full"
+                    else:
+                        model.data_type = "form"
+                    model.save()
                 else:
-                    QrManualForm(request.POST, instance=model).save()
+                    model = FormClass(request.POST, instance=model).save(commit=False)
+                    model.data_type = "qr_edit"
+                    model.save()
                 qr_img = generate_qr_code(model)
                 if is_err(qr_img):
                     logger.error(f'Error generate_qr_code: {qr_img.err}')
@@ -73,12 +105,14 @@ class PostManualForm(TemplateView):
                                  'img': qr_img.value})
                 return push_url(retarget(result, '#main'), f"/qr/{model.rnd}/")
             else:  # Not valid form
-                # template = "only_form.html" if manual_qr_edit else "form_manual.html"
-                template = "form_manual.html"
-                mode = "qr" if manual_qr_edit else "manual"
-                logger.info(f'Mode: {mode}')
-                return retarget(render(request, template, {"mode": mode, "show_form": True, "form": form,
-                                                           "model": model}), '#main')
+                # Return only_form.html with errors
+                return render(request, "only_form.html", {
+                    "mode": "manual",
+                    "show_form": True,
+                    "form": form,
+                    "form_type": form_type,
+                    "model": model
+                })
 
         return render(request, self.template_name, self.get_context_data())
 
@@ -114,10 +148,10 @@ class DownloadPdfView(TemplateView):
             logger.error(f'PDF download: Model not found for rnd={rnd_id}')
             return HttpResponse("QR code not found", status=404)
 
-        # Only allow PDF download for scanned QR codes (qr or qr_edit), not for manually created forms
+        # Only allow PDF download for scanned QR codes (qr, qr_edit, form_full), not for simple forms
         if upn_model.data_type == 'form':
-            logger.warning(f'PDF download attempted for manually created form: rnd={rnd_id}')
-            return HttpResponse("PDF download is only available for scanned invoices", status=403)
+            logger.warning(f'PDF download attempted for simple form: rnd={rnd_id}')
+            return HttpResponse("PDF download is only available for scanned invoices and full forms", status=403)
 
         try:
             # Get PDF settings from query parameters

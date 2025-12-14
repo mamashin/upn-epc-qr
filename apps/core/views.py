@@ -14,7 +14,7 @@ from django_htmx.http import push_url, HttpResponseClientRefresh, trigger_client
 from result import is_err
 
 from apps.qr.epc import generate_qr_code
-from apps.qr.forms import QrManualForm
+from apps.qr.forms import QrManualForm, QrFullForm
 from apps.qr.models import UpnModel
 
 
@@ -43,7 +43,7 @@ class MainPage(TemplateView):
                     form.fields["data_type"].initial = "form"
                     # render with nav.html !
                     response = render(request, "form_manual.html",
-                                      {"mode": "manual", "show_form": True, "form": form})
+                                      {"mode": "manual", "show_form": True, "form": form, "form_type": "simple"})
                     return response
 
                 if mode == "scan":  # Scan QR code (HTMX mode)
@@ -58,7 +58,7 @@ class MainPage(TemplateView):
                     edit_model.data_type = "qr_edit"
                     response = render(request, "only_form.html",
                                       {"mode": "qr", "show_form": True, 'model': edit_model,
-                                       "form": QrManualForm(instance=edit_model)})
+                                       "form": QrFullForm(instance=edit_model), "form_type": "full"})
 
                     return push_url(response, f"/qr/{rnd}/edit/")
 
@@ -78,7 +78,7 @@ class MainPage(TemplateView):
             form = QrManualForm()
             form.fields["data_type"].initial = "form"
             response = render(request, self.template_name,
-                              {"mode": "manual", "show_form": True, "form": form, "direct_get": True})
+                              {"mode": "manual", "show_form": True, "form": form, "form_type": "simple", "direct_get": True})
             return response
 
         if kwargs.get("mode") == "edit":  # Direct GET
@@ -96,7 +96,7 @@ class MainPage(TemplateView):
                 img = img.value
             response = render(request, "qr_open.html",
                               {"mode": "qr", "show_form": True, 'model': edit_model, "direct_get": True,
-                               "form": QrManualForm(instance=edit_model), "img": img})
+                               "form": QrFullForm(instance=edit_model), "form_type": "full", "img": img})
             return response
 
         else:
