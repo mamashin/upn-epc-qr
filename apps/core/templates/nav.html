@@ -4,15 +4,15 @@
 {#    <div class="overlay"></div>#}
 {#    <div class=""><a href="/"><i>home</i></a></div>#}
 {#</nav>#}
-<nav id="navigation" hx-push-url="true" class="top">
+<nav id="navigation" class="top">
       <div class="m l s"><a href="/"><i>home</i></a></div>
     <div class="max"></div>
   {# mode: manual, scan & qr  #}
       <button {% if mode != 'scan' %}class="small-round" {% else %}disabled{% endif %} hx-get="{% url 'qr_scan' %}"
-                  hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">
+                  hx-push-url="true" hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML">
           <i>qr_code_scanner</i><span class="m l">Scan</span></button>
       <button {% if mode != 'manual' %}class="small-round" {% else %}disabled{% endif %} hx-get="{% url 'qr_manual' %}"
-                  hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">
+                  hx-push-url="true" hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML">
           <i>format_list_bulleted</i><span class="m l">Enter</span></button>
   {% if mode == 'qr' %}
       <button class="small-round" hx-get="{% url 'qr_edit' model.rnd %}" hx-target="#manual_edit" hx-swap="innerHTML">
