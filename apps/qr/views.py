@@ -45,7 +45,7 @@ class PostQr(TemplateView):
                 logger.error(f'Error create_upn_model: {create_result.err}')
                 with sentry_sdk.new_scope() as scope:
                     scope.set_extra("decoded_text", request.POST.get("decodedText", ""))
-                    sentry_sdk.capture_message(f'Error create_upn_model: {create_result.err}', level="error")
+                    scope.capture_message(f'Error create_upn_model: {create_result.err}', level="error")
                 return render(request, "qr_error.html", self.get_context_data())
 
         return render(request, self.template_name, self.get_context_data())

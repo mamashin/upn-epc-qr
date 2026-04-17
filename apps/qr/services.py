@@ -30,9 +30,15 @@ def create_upn_model(form_data: str) -> Result:
         except Exception as e:
             return Err(f'Error split decodedText data - {e}')
 
-        if len(qr_form_data_list) != 20:  # UPN has 20 fields !
+        if not qr_form_data_list or qr_form_data_list[0] != 'UPNQR':
+            logger.error(f'Not a UPN QR code, first field: {repr(qr_form_data_list[0] if qr_form_data_list else "empty")}')
+            return Err('Not a UPN QR code')
+        if len(qr_form_data_list) < 20:
             logger.error(f'Wrong list length: {len(qr_form_data_list)}, data: {repr(qr_form_data_list)}')
             return Err('Wrong list length')
+        if len(qr_form_data_list) > 20:  # some generators append extra fields (e.g. EMAIL:...)
+            logger.warning(f'Extra UPN fields ignored: {repr(qr_form_data_list[20:])}')
+            qr_form_data_list = qr_form_data_list[:20]
 
         # Check if original amount was zero (field #8 in UPN format)
         original_amount_cents = int(qr_form_data_list[8]) if qr_form_data_list[8] else 0
