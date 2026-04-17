@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikolay Mamashin (mamashin@gmail.com)'
 
+import re
 from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 
@@ -65,9 +66,10 @@ class UpnBaseModel(ListBaseModel):
         if not v:
             return ''
         try:
+            # Remove all whitespace before parsing to handle variants like '17. 04. 2026'
             # Parse date and set time to noon (12:00) to avoid timezone conversion issues
             # When converted to UTC, it won't shift to previous day
-            ts = datetime.strptime(v, '%d.%m.%Y').replace(hour=12, minute=0, second=0)
+            ts = datetime.strptime(re.sub(r'\s+', '', v), '%d.%m.%Y').replace(hour=12, minute=0, second=0)
         except ValueError:
             raise ValueError('Invalid datum_placila')
         return ts

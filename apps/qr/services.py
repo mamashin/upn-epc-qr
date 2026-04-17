@@ -26,11 +26,12 @@ def create_upn_model(form_data: str) -> Result:
     if qr_form_data.is_valid():
         try:
             # Convert decodedText to list (\n - separator)
-            qr_form_data_list = qr_form_data.cleaned_data['decodedText'].split('\n')
+            qr_form_data_list = qr_form_data.cleaned_data['decodedText'].replace('\r', '').split('\n')
         except Exception as e:
             return Err(f'Error split decodedText data - {e}')
 
         if len(qr_form_data_list) != 20:  # UPN has 20 fields !
+            logger.error(f'Wrong list length: {len(qr_form_data_list)}, data: {repr(qr_form_data_list)}')
             return Err('Wrong list length')
 
         # Check if original amount was zero (field #8 in UPN format)

@@ -56,7 +56,7 @@ msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
 "it or save it for later use."
 msgstr ""
-"Po skeniranju QR kode lahko izberete ali želite kopirati povezavoin jo "
+"Po skeniranju QR kode lahko izberete ali želite kopirati povezavo in jo "
 "deliti ali pa jo shranite za kasnejšo uporabo."
 
 #: apps/core/templates/only_form.html:11
