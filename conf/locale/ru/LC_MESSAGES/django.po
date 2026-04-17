@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 00:01+0100\n"
+"POT-Creation-Date: 2026-04-17 18:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,10 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"<p>Этот сервис позволяет работать со словенскими платежными <strong>UPN QR</strong> кодами: конвертировать их в формат <strong>EPC "
-"QR</strong> (совместимый с Revolut, Bunq, N26 и другими банками ЕС), создавать новые UPN счета и генерировать PDF копии.</p>\n"
+"<p>Этот сервис позволяет работать со словенскими платежными <strong>UPN QR</"
+"strong> кодами: конвертировать их в формат <strong>EPC QR</strong> "
+"(совместимый с Revolut, Bunq, N26 и другими банками ЕС), создавать новые UPN "
+"счета и генерировать PDF копии.</p>\n"
 "        "
 
 #: apps/core/templates/include/main_description.html:7
@@ -51,7 +53,11 @@ msgstr "редактировать отсканированный код"
 msgid "download invoice as PDF copy"
 msgstr "скачать PDF копию счета"
 
-#: apps/core/templates/include/main_description.html:12
+#: apps/core/templates/include/main_description.html:11
+msgid "download QR code as a PNG image"
+msgstr "скачать QR код как PNG изображение"
+
+#: apps/core/templates/include/main_description.html:13
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
 "it or save it for later use."
@@ -125,39 +131,43 @@ msgstr ""
 "0.01 EUR. Вы можете изменить её через форму редактирования или в банковском "
 "приложении."
 
-#: apps/core/templates/qr_show.html:27
+#: apps/core/templates/qr_show.html:28
+msgid "Download QR Image"
+msgstr "Скачать QR изображение"
+
+#: apps/core/templates/qr_show.html:34
 msgid "Download UPN Invoice"
 msgstr "Скачать UPN счет"
 
-#: apps/core/templates/qr_show.html:41
+#: apps/core/templates/qr_show.html:49
 msgid "Invoice Download Settings"
 msgstr "Настройки скачивания счета"
 
-#: apps/core/templates/qr_show.html:46
+#: apps/core/templates/qr_show.html:54
 msgid "Top"
 msgstr "Сверху"
 
-#: apps/core/templates/qr_show.html:47
+#: apps/core/templates/qr_show.html:55
 msgid "Bottom"
 msgstr "Снизу"
 
-#: apps/core/templates/qr_show.html:49
+#: apps/core/templates/qr_show.html:57
 msgid "Position"
 msgstr "Позиция"
 
-#: apps/core/templates/qr_show.html:50
+#: apps/core/templates/qr_show.html:58
 msgid "Where to place the payment slip on the page"
 msgstr "Где разместить платежку на странице"
 
-#: apps/core/templates/qr_show.html:55
+#: apps/core/templates/qr_show.html:63
 msgid "Print background template"
 msgstr "Печатать подложку"
 
-#: apps/core/templates/qr_show.html:59
+#: apps/core/templates/qr_show.html:67
 msgid "Cancel"
 msgstr "Отмена"
 
-#: apps/core/templates/qr_show.html:62
+#: apps/core/templates/qr_show.html:70
 msgid "Download"
 msgstr "Скачать"
 

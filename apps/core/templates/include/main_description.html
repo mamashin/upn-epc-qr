@@ -1,13 +1,53 @@
 {% load static %}
 {% load i18n %}
+<style>
+.feature-list {
+    margin: 0.75rem 0 1rem;
+}
+.feature-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+}
+@media (min-width: 601px) {
+    .feature-list {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.5rem 1rem;
+        align-items: center;
+    }
+    .feature-row {
+        display: contents;
+    }
+}
+</style>
     <div class="large-text">
         {% blocktranslate %}
         <p>This service allows you to work with Slovenian <strong>UPN QR</strong> payment codes: convert them to <strong>EPC QR</strong> format (compatible with Revolut, Bunq, N26 and other EU banks), create new UPN invoices, and generate PDF copies.</p>
         {% endblocktranslate %}
-        <p><button class="small-round" disabled><i>qr_code_scanner</i><span class="m l">Scan</span></button> - {% trans "scan QR with a camera" %}</p>
-        <p><button class="small-round" disabled><i>format_list_bulleted</i><span class="m l">Enter</span></button> - {% trans "create new UPN invoices or enter payment details" %}</p>
-        <p><button class="small-round" disabled><i>edit_note</i><span class="m l">Edit</span></button> - {% trans "edit the scanned code" %}</p>
-        <p><button class="small-round" disabled><i>picture_as_pdf</i><span class="m l">Download</span></button> - {% trans "download invoice as PDF copy" %}</p>
+        <div class="feature-list">
+            <div class="feature-row">
+                <button class="small-round" hx-get="{% url 'qr_scan' %}" hx-on:htmx:before-request="controlCamera('start')" hx-target="#main" hx-swap="innerHTML"><i>qr_code_scanner</i><span class="m l">Scan</span></button>
+                <span>{% trans "scan QR with a camera" %}</span>
+            </div>
+            <div class="feature-row">
+                <button class="small-round" hx-get="{% url 'qr_manual' %}" hx-on:htmx:before-request="controlCamera('stop')" hx-target="#main" hx-swap="innerHTML"><i>format_list_bulleted</i><span class="m l">Enter</span></button>
+                <span>{% trans "create new UPN invoices or enter payment details" %}</span>
+            </div>
+            <div class="feature-row">
+                <button class="small-round" disabled><i>edit_note</i><span class="m l">Edit</span></button>
+                <span>{% trans "edit the scanned code" %}</span>
+            </div>
+            <div class="feature-row">
+                <button class="small-round" disabled><i>picture_as_pdf</i><span class="m l">Download</span></button>
+                <span>{% trans "download invoice as PDF copy" %}</span>
+            </div>
+            <div class="feature-row">
+                <button class="small-round" disabled><i>image</i><span class="m l">QR</span></button>
+                <span>{% trans "download QR code as a PNG image" %}</span>
+            </div>
+        </div>
         <p>
             {% trans "After scanning the QR code, you can choose to either copy the link to share it or save it for later use." %}
         </p>

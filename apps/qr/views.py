@@ -2,10 +2,13 @@
 
 __author__ = 'Nikolay Mamashin (mamashin@gmail.com)'
 
+import base64
 import json
+import re
 import sentry_sdk
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
+from django.views import View
 from django.views.decorators.http import require_GET
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -193,3 +196,24 @@ class DownloadPdfView(TemplateView):
         except Exception as e:
             logger.error(f'Error generating PDF for rnd={rnd_id}: {str(e)}')
             return HttpResponse(f"Error generating PDF: {str(e)}", status=500)
+
+
+def _qr_image_filename(upn_model) -> str:
+    date = upn_model.rok_placila or upn_model.created
+    date_str = date.strftime('%Y%m%d')
+    amount_str = f'{upn_model.znesek:.2f}'.rstrip('0').rstrip('.')
+    recipient = re.sub(r'[^a-z0-9]+', '-', upn_model.ime_prejemnika.lower())[:15].strip('-')
+    return f'epc-qr_{date_str}_{amount_str}_{recipient}.png'
+
+
+class DownloadQrImageView(View):
+    def get(self, request, rnd_id, **kwargs):
+        upn_model = get_object_or_404(UpnModel, rnd=rnd_id)
+        qr_result = generate_qr_code(upn_model)
+        if is_err(qr_result):
+            raise Http404
+        img_bytes = base64.b64decode(qr_result.value)
+        filename = _qr_image_filename(upn_model)
+        response = HttpResponse(img_bytes, content_type='image/png')
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response

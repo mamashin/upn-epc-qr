@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 00:01+0100\n"
+"POT-Creation-Date: 2026-04-17 18:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,11 @@ msgstr "edit the scanned code"
 msgid "download invoice as PDF copy"
 msgstr "download invoice as PDF copy"
 
-#: apps/core/templates/include/main_description.html:12
+#: apps/core/templates/include/main_description.html:11
+msgid "download QR code as a PNG image"
+msgstr "download QR code as a PNG image"
+
+#: apps/core/templates/include/main_description.html:13
 msgid ""
 "After scanning the QR code, you can choose to either copy the link to share "
 "it or save it for later use."
@@ -125,39 +129,43 @@ msgstr ""
 "automatically set to 0.01 EUR. You can change it using the edit form or in "
 "your banking app."
 
-#: apps/core/templates/qr_show.html:27
+#: apps/core/templates/qr_show.html:28
+msgid "Download QR Image"
+msgstr "Download QR Image"
+
+#: apps/core/templates/qr_show.html:34
 msgid "Download UPN Invoice"
 msgstr "Download UPN Invoice"
 
-#: apps/core/templates/qr_show.html:41
+#: apps/core/templates/qr_show.html:49
 msgid "Invoice Download Settings"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:46
+#: apps/core/templates/qr_show.html:54
 msgid "Top"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:47
+#: apps/core/templates/qr_show.html:55
 msgid "Bottom"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:49
+#: apps/core/templates/qr_show.html:57
 msgid "Position"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:50
+#: apps/core/templates/qr_show.html:58
 msgid "Where to place the payment slip on the page"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:55
+#: apps/core/templates/qr_show.html:63
 msgid "Print background template"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:59
+#: apps/core/templates/qr_show.html:67
 msgid "Cancel"
 msgstr ""
 
-#: apps/core/templates/qr_show.html:62
+#: apps/core/templates/qr_show.html:70
 msgid "Download"
 msgstr ""
 

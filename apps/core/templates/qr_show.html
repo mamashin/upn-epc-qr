@@ -21,12 +21,20 @@
         <hr/>
         {% include 'qr_link.html' %}
         <div class="space"></div>
+        <nav class="center-align wrap">
+        {% if model %}
+        <a href="{% url 'qr_image_download' model.rnd %}" class="button border round">
+            <i>qr_code</i>
+            <span>{% trans "Download QR Image" %}</span>
+        </a>
+        {% endif %}
         {% if model.data_type == 'qr' or model.data_type == 'qr_edit' or model.data_type == 'form_full' %}
         <button class="border round" onclick="ui('#pdf-settings-modal')">
             <i>picture_as_pdf</i>
             <span>{% trans "Download UPN Invoice" %}</span>
         </button>
         {% endif %}
+        </nav>
     </div>
     <div id="manual_edit" class="s12 m6 l6">
         {% if direct_get and form %}
