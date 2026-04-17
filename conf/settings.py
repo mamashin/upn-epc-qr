@@ -90,6 +90,7 @@ MIDDLEWARE = (
     'apps.core.middleware.CustomRemoteUserMiddleware',
     'apps.core.middleware.real_ip_middleware',
     'django_htmx.middleware.HtmxMiddleware',
+    'apps.core.middleware.htmx_cache_middleware',
 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

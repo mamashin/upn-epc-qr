@@ -30,3 +30,19 @@ def real_ip_middleware(get_response):  # type: ignore
         return get_response(request)
 
     return middleware
+
+
+def htmx_cache_middleware(get_response):
+    """Prevent browsers and proxies from caching HTMX partial responses as full pages.
+
+    Without Vary: HX-Request, a cached HTMX partial for /qr/{rnd}/ could be served
+    to a regular browser request, showing a fragment without <head>/CSS.
+    """
+    def middleware(request):
+        response = get_response(request)
+        if getattr(request, 'htmx', False):
+            response['Vary'] = 'HX-Request'
+            response['Cache-Control'] = 'no-store'
+        return response
+
+    return middleware

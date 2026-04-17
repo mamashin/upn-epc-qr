@@ -35,6 +35,7 @@
 
     <script src="{% static 'js/html5-qrcode.min.js' %}"></script>
     <script src="{% static 'js/htmx.min.js' %}"></script>
+    <script>htmx.config.refreshOnHistoryMiss = true;</script>
     {% if not debug %}
         <script async data-id="101447793" src="/1ae93131f4aca.js"></script>
     {% endif %}

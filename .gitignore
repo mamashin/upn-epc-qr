@@ -4,6 +4,7 @@ db.sqlite3
 poetry.lock
 logs/*.log
 staticfiles
+CLAUDE.md
 
 **/migrations/**
 !**/migrations/__init__.py
